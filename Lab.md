@@ -40,17 +40,17 @@ In this step you will ensure that two users in your Office 365 tenant have the *
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
 1. Select **Azure Active Directory** (Azure AD) from the sidebar navigation or using the search bar:
 
-    ![Screenshot selecting Azure AD](./images/aad-user-setup-01.png)
+    ![Screenshot selecting Azure AD](./Images/aad-user-setup-01.png)
 
 1. On the Azure AD Overview page, select **Users** from the **Manage** section of the menu:
 
-    ![Screenshot of the Users menu in Azure AD](./images/aad-user-setup-02.png)
+    ![Screenshot of the Users menu in Azure AD](./Images/aad-user-setup-02.png)
 
 1. In the list of **All Users**, identify a user you will use in this lab that you have access to.
     1. Select the user by selecting their name.
     1. In the sidebar navigation menu, select **Directory role**.
 
-        ![Screenshot of the Users menu in Azure AD](./images/aad-user-setup-03.png)
+        ![Screenshot of the Users menu in Azure AD](./Images/aad-user-setup-03.png)
 
     1. If the role **Global administrator** is not in the list of roles for the user:
         1. Select **Add role** button.
@@ -63,7 +63,7 @@ In this step you will ensure that two users in your Office 365 tenant have the *
 
     1. In the sidebar, select the **Enable** link under the list of **Quick Steps**.
 
-        ![Screenshot of enabling MFA for users](./images/aad-user-setup-04.png)
+        ![Screenshot of enabling MFA for users](./Images/aad-user-setup-04.png)
 
     1. Follow the prompts to enable multi-factor authentication on this user.
 
@@ -79,7 +79,7 @@ In this step you will setup your Office 365 tenant to enable usage of Euclid.
     - **Type**: Mail-enabled security
     - **Name**: Consent Request Approvers
 
-    ![Screenshot of creating a new mail-enabled security group](./images/m365-group-setup-01.png)
+    ![Screenshot of creating a new mail-enabled security group](./Images/m365-group-setup-01.png)
 
 1. Once the group has been created, select it.
 1. On the **Members** section of the group dialog, select **Edit**
@@ -113,7 +113,7 @@ The first step is to create an Azure AD application that will be used as the sec
 1. On the Azure AD Overview page, select **App registrations** from the **Manage** section of the menu.
 1. Select the **New application registration** button:
 
-    ![Screenshot of the list of app registrations page in the Azure portal](./images/aad-app-setup-01.png)
+    ![Screenshot of the list of app registrations page in the Azure portal](./Images/aad-app-setup-01.png)
 
 1. Use the following values to create a new Azure AD application and select **Create**:
 
@@ -126,13 +126,13 @@ The first step is to create an Azure AD application that will be used as the sec
 1. Select the **Settings** button from the top navigation.
 1. Select the **Keys** menu item from the application's menu:
 
-    ![Screenshot of the Azure AD application's menu](./images/aad-app-setup-02.png)
+    ![Screenshot of the Azure AD application's menu](./Images/aad-app-setup-02.png)
 
 1. In the **Passwords** section, create a new key by entering a **name**, **duration** and **value** and click **Save**.
 
     It does not matter what you choose, but ensure you keep a copy of the name and the hashed key after it is saved as the hashed value will never be shown again and you will need to create a new key as it is needed later in the lab.
 
-    ![Screenshot of creating a password for an Azure AD application](./images/aad-app-setup-03.png)
+    ![Screenshot of creating a password for an Azure AD application](./Images/aad-app-setup-03.png)
 
     This will be referenced as the *service principal key*.
 
@@ -142,7 +142,7 @@ The first step is to create an Azure AD application that will be used as the sec
     1. From the Azure AD main sidebar navigation, select the **Properties** menu item.
     1. Copy the GUID for the **Directory ID** as you will need this later.
 
-    ![Screenshot of the Azure AD Properties page](./images/aad-app-setup-04.png)
+    ![Screenshot of the Azure AD Properties page](./Images/aad-app-setup-04.png)
 
 ### Create Azure Storage Blob
 
@@ -165,7 +165,7 @@ In this step you will create an Azure Storage account where Euclid will store th
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Access control (IAM)**
 
-      ![Screenshot of the Azure Storage permissions](./images/azstorage-config-01.png)
+      ![Screenshot of the Azure Storage permissions](./Images/azstorage-config-01.png)
 
     1. Select the **Add** button in the navigation.
     1. Use the following values to find the application you previously selected to grant it **Owner** permissions, then select **Save**:
@@ -192,7 +192,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 1. Select **Create resource** from the sidebar navigation.
 1. Find the **Data Factory** resource type and use the following values to create it, then select **Create**:
 
-    ![Screenshot creating an Azure Data Factory](./images/adfv2-setup-01.png)
+    ![Screenshot creating an Azure Data Factory](./Images/adfv2-setup-01.png)
 
 1. Use the following values to create a new Azure Data Factory resource, then select **Create**:
 
@@ -204,7 +204,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
 1. Once the Azure Data Factory resource is created, select the **Author & Monitor** tile to launch the Azure Data Factory full screen editor.
 
-    ![Screenshot of the Azure Data Factory](./images/adfv2-setup-02.png)
+    ![Screenshot of the Azure Data Factory](./Images/adfv2-setup-02.png)
 
 1. When the full screen editor loads, update the URL to add the following querystring feature flag to enable the Office 365 Connector and reload the browser by pressing <kbd>ENTER</kbd>.
 
@@ -216,15 +216,15 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
 1. Switch from the **Overview** to the **Author** experience by selecting it from the left-hand navigation:
 
-    ![Screenshot of the Azure Data Factory menu](./images/adfv2-setup-03.png)
+    ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-03.png)
 
 1. Create a new pipeline by selecting the plus icon, then **pipeline**:
 
-    ![Screenshot of the Azure Data Factory menu](./images/adfv2-setup-04.png)
+    ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-04.png)
 
     1. Drag the **Copy Data** activity from the **Move & Transform** section onto the design surface:
 
-        ![Screenshot of the Azure Data Factory menu](./images/adfv2-setup-05.png)
+        ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-05.png)
 
     1. Select the activity in the designer.
     1. In the activity editor pane below the designer, select the **Source** tab, then select **New**.
@@ -235,11 +235,11 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     1. The designer will create a new tab for the Office 365 connector. Select the **Connection** tab in the connector's editor, then the **New** button.
     1. In the dialog that appears, enter the previously created Azure AD application's **Application ID** and **Password** in the **Service principal ID** & **Service principal key** fields, then select **Finish**.
 
-        ![Screenshot creating a new Office 365 connector in Azure Data Factory](./images/adfv2-setup-06.png)
+        ![Screenshot creating a new Office 365 connector in Azure Data Factory](./Images/adfv2-setup-06.png)
 
     1. After creating the Office 365 connection, for the **Table** field, select **BasicDataSet_v0.Message_v0**.
 
-        ![Screenshot configuring the Office 365 connector in Azure Data Factory](./images/adfv2-setup-07.png)
+        ![Screenshot configuring the Office 365 connector in Azure Data Factory](./Images/adfv2-setup-07.png)
 
     1. Select the **Schema** tab and then select **Import Schema**.
     1. With the *source* configured for your **copy data** activity, now configure the *sink*, or the location where data will be stored.
@@ -248,7 +248,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     1. Select the **copy data** activity, then select the **sink** tab:
 
-        ![Screenshot of the Azure Data Factory designer](./images/adfv2-setup-08.png)
+        ![Screenshot of the Azure Data Factory designer](./Images/adfv2-setup-08.png)
 
     1. Select the **New** button, then select **Azure Blob Storage**
         1. Select the **Connection** tab.
@@ -258,14 +258,14 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
             - **Azure subscription**: *select your Azure subscription*
             - **Storage account name**: *select the storage account you previously created*
 
-            ![Screenshot of creating a new linked service](./images/adfv2-setup-09.png)
+            ![Screenshot of creating a new linked service](./Images/adfv2-setup-09.png)
 
         1. Next to the **File path** field, select **Browse**.
         1. Select the name of the storage container you created previously.
         1. Set the **File format** to **JSON format**.
         1. Set the **File pattern** to **Set of objects**.
 
-            ![Screenshot of the Azure Storage blob linked service](./images/adfv2-setup-10.png)
+            ![Screenshot of the Azure Storage blob linked service](./Images/adfv2-setup-10.png)
 
 1. With the pipeline created, select the **Validate All** button at the top of the designer.
 1. After validating (*and fixing any issues that were found*), select the **Publish All** button at the top of the designer.
@@ -278,25 +278,25 @@ With the pipeline created, now it's time to execute it.
 
 1. In the Azure Data Factory designer, with the pipeline open, select **Trigger > Trigger Now**:
 
-    ![Screenshot starting a job](./images/adfv2-run-01.png)
+    ![Screenshot starting a job](./Images/adfv2-run-01.png)
 
 1. After starting the job, from the sidebar menu, select **Monitor** to view current running jobs:
 
-    ![Screenshot of Azure Data Factory's Monitor screen](./images/adfv2-run-02.png)
+    ![Screenshot of Azure Data Factory's Monitor screen](./Images/adfv2-run-02.png)
 
 1. Locate the pipeline run you just started in the list. In the **Actions** column, select the **View Activity Runs** icon:
 
-    ![Screenshot of all pipeline runs](./images/adfv2-run-03.png)
+    ![Screenshot of all pipeline runs](./Images/adfv2-run-03.png)
 
 1. On the **Activity Runs** screen, you will see a list of all the activities that are running in this pipeline. Our pipeline only  has one activity that should show as currently *In Progress*.
 
-    ![Screenshot of activity runs for the selected pipeline](./images/adfv2-run-04.png)
+    ![Screenshot of activity runs for the selected pipeline](./Images/adfv2-run-04.png)
 
     While the status may show as *In Progress*, the request may be paused internally as the request for access to the data in Office 365 may need to be approved. You can see if this is the case by selecting the **Details** icon in the **Actions** column.
 
 1. In the **Details** screen, look for the status of the pipeline activity as highlighted in the following image. In this case you can see it is in a state of **RequestingConsent**:
 
-    ![Screenshot of activity run status](./images/adfv2-run-05.png)
+    ![Screenshot of activity run status](./Images/adfv2-run-05.png)
 
     At this point, the activity run is internally paused until someone manually approves the consent request.
 
@@ -339,7 +339,7 @@ In this step you will use Exchange Online PowerShell to find data requests that 
 
     Examine the list of data access requests returned. In the following image, notice there are two pending requests:
 
-    ![Screenshot of pending data access requests](./images/adfv2-run-06.png)
+    ![Screenshot of pending data access requests](./Images/adfv2-run-06.png)
 
 1. Approve a data access returned in the previous step by copying the **Identity** GUID of a request by executing the following PowerShell:
 
@@ -351,11 +351,11 @@ In this step you will use Exchange Online PowerShell to find data requests that 
 
 1. After a few moments, you should see the status page for the activity run update to show it is now extracting data:
 
-    ![Screenshot of activity run status](./images/adfv2-run-07.png)
+    ![Screenshot of activity run status](./Images/adfv2-run-07.png)
 
 This process of extracting the data can take some time depending on the size of your Office 365 tenant as shown in the following examples:
 
-![Screenshot of pipeline successful runs](./images/adfv2-run-08.png)
+![Screenshot of pipeline successful runs](./Images/adfv2-run-08.png)
 
 ### Verify data extracted from Office 365 to Azure Storage Blob
 
@@ -368,7 +368,7 @@ Once the pipeline completes, verify data has been extracted to the Azure Storage
 1. On the Azure Storage account blade, select **Blobs** from the sidebar menu.
 1. Select the container created previously in this lab that you configured the Azure Data Factory pipeline as the sink for the extracted data. You should see data in this container now:
 
-    ![Screenshot of extracted data in Azure Storage blob](./images/azstorage-raw-data.png)
+    ![Screenshot of extracted data in Azure Storage blob](./Images/azstorage-raw-data.png)
 
 <a name="exercise3"></a>
 
