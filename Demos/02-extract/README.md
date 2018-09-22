@@ -1,24 +1,6 @@
-# Extract Office 365 data with Project Euclid
+# Extract Office 365 data with Graph Data Connect
 
-In this demo you will create, execute and approve an Azure Data Factory pipeline to extra data from Office 365 to an Azure Storage Blob for additional processing.
-
-## Prerequisites
-
-To complete this lab, you need the following:
-
-- Microsoft Azure subscription
-  - If you do not have one, you can obtain one (for free) here: [https://azure.microsoft.com/free](https://azure.microsoft.com/free/)
-  - The account used to signin must have the **global administrator** role granted to it.
-- Office 365 tenancy
-  - If you do not have one, you obtain one (for free) by signing up to the [Office 365 Developer Program](https://developer.microsoft.com/office/dev-program).
-  - Multiple Office 365 users with emails sent & received
-  - Access to at least two accounts that meet the following requirements:
-    - global tenant administrators & have the **global administrator** role granted
-    - have MFA enabled on both accounts
-- Exchange Online PowerShell for multi-factor authentication installed
-  - More information: [Exchange Online PowerShell for multi-factor authentication](https://docs.microsoft.com/powershell/exchange/exchange-online/connect-to-exchange-online-powershell/mfa-connect-to-exchange-online-powershell)
-
-> NOTE: The screenshots and examples used in this lab are from an Office 365 test tenant with fake email from test users. You can use your own Office 365 tenant to perform the same steps. No data is written to Office 365. A copy of email data is extracted from all users in an office Office 365 tenant and copied to an Azure Blob Storage account that you maintain control over who has access to the data within the Azure Blob Storage.
+In this exercise you will create, execute and approve an Azure Data Factory pipeline to extra data from Office 365 to an Azure Storage Blob for additional processing.
 
 ## Create Azure AD Application
 
@@ -34,9 +16,9 @@ The first step is to create an Azure AD application that will be used as the sec
 
 1. Use the following values to create a new Azure AD application and select **Create**:
 
-    - **Name**: Euclid Data Transfer
+    - **Name**: Graph Data Connect Data Transfer
     - **Application type**: Web app / API
-    - **Sign-on URL**: https://[tenantid].onmicrosoft.com/EuclidDataTransfer
+    - **Sign-on URL**: https://[tenantid].onmicrosoft.com/Graph Data ConnectDataTransfer
 
 1. After creating the application, select it.
 1. Locate the **Application ID** and copy it as you will need it later in this lab. This will be referred to as the *service principal ID*.
@@ -63,7 +45,7 @@ The first step is to create an Azure AD application that will be used as the sec
 
 ## Create Azure Storage Blob
 
-In this step you will create an Azure Storage account where Euclid will store the data extracted from Office 365 for further processing.
+In this step you will create an Azure Storage account where Graph Data Connect will store the data extracted from Office 365 for further processing.
 
 1. Open a browser and navigate to your Azure Portal at [https://portal.azure.com](https://portal.azure.com)
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
@@ -89,7 +71,7 @@ In this step you will create an Azure Storage account where Euclid will store th
 
         - **Role**: Owner
         - **Assign access to**: Azure AD user, group or application
-        - **Select**: Euclid Data Transfer (*the name of the Azure AD application you created previously*)
+        - **Select**: Graph Data Connect Data Transfer (*the name of the Azure AD application you created previously*)
 1. Create a new container in the Azure Storage account
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Blobs**
@@ -99,7 +81,7 @@ In this step you will create an Azure Storage account where Euclid will store th
 
 ## Create an Azure Data Factory Pipeline
 
-The next step is to use the Azure Data Factory to create a pipeline to extract the data from Office 365 to the Azure Storage account using Euclid.
+The next step is to use the Azure Data Factory to create a pipeline to extract the data from Office 365 to the Azure Storage account using Graph Data Connect.
 
 1. Open a browser and navigate to your Azure Portal at [https://portal.azure.com](https://portal.azure.com)
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
@@ -129,7 +111,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
       ?feature.office365=true
       ```
 
-      > NOTE: This feature flag will not be required once Euclid moves from Preview to Generally Available.
+      > NOTE: This feature flag will not be required once Graph Data Connect moves from Preview to Generally Available.
 
 1. Switch from the **Overview** to the **Author** experience by selecting it from the left-hand navigation:
 
@@ -147,7 +129,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     1. In the activity editor pane below the designer, select the **Source** tab, then select **New**.
     1. Locate the dataset **Office 365**, select it and then select the **Finish** button.
 
-        > NOTE: The feature flag you added to the URL earlier is what makes the **Office 365** connector appear in this step. This is only necessary when Euclid is in preview.
+        > NOTE: The feature flag you added to the URL earlier is what makes the **Office 365** connector appear in this step. This is only necessary when Graph Data Connect is in preview.
 
     1. The designer will create a new tab for the Office 365 connector. Select the **Connection** tab in the connector's editor, then the **New** button.
     1. In the dialog that appears, enter the previously created Azure AD application's **Application ID** and **Password** in the **Service principal ID** & **Service principal key** fields, then select **Finish**.
@@ -248,7 +230,7 @@ In this step you will use Exchange Online PowerShell to find data requests that 
         >
         > If you simply close the PowerShell window, it will leave the connection open.
 
-1. Get a list of all pending data requests from Euclid by executing the following PowerShell:
+1. Get a list of all pending data requests from Graph Data Connect by executing the following PowerShell:
 
     ```powershell
     Get-ElevatedAccessRequest | where {$_.RequestStatus -eq 'Pending'} | select RequestorUPN, Service, Identity, RequestedAccess | fl
@@ -286,4 +268,3 @@ Once the pipeline completes, verify data has been extracted to the Azure Storage
 1. Select the container created previously in this lab that you configured the Azure Data Factory pipeline as the sink for the extracted data. You should see data in this container now:
 
     ![Screenshot of extracted data in Azure Storage blob](./../../Images/azstorage-raw-data.png)
-

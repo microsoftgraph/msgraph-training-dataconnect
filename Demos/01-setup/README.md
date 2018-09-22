@@ -1,20 +1,6 @@
-# Setup Office 365 Tenant and Enable Euclid
+# Setup Office 365 Tenant and Enable Graph Data Connect
 
-Prior to leveraging Euclid for the first time, you need to configure your Office 365 tenant. This involves turning on the service and configuring a security group with permissions to approve data extraction requests. Users that will go in this group that will grant consent to data requests must have the **global administrator** role enabled.
-
-## Prerequisites
-
-To complete this lab, you need the following:
-
-- Microsoft Azure subscription
-  - If you do not have one, you can obtain one (for free) here: [https://azure.microsoft.com/free](https://azure.microsoft.com/free/)
-  - The account used to signin must have the **global administrator** role granted to it.
-- Office 365 tenancy
-  - If you do not have one, you obtain one (for free) by signing up to the [Office 365 Developer Program](https://developer.microsoft.com/office/dev-program).
-  - Multiple Office 365 users with emails sent & received
-  - Access to at least two accounts that meet the following requirements:
-    - global tenant administrators & have the **global administrator** role granted
-    - have MFA enabled on both accounts
+Prior to leveraging Graph Data Connect for the first time, you need to configure your Office 365 tenant. This involves turning on the service and configuring a security group with permissions to approve data extraction requests. Users that will go in this group that will grant consent to data requests must have the **global administrator** role enabled.
 
 ## Grant Azure AD users the **global administrator** role and enable MFA
 
@@ -43,7 +29,7 @@ In this step you will ensure that two users in your Office 365 tenant have the *
 1. On the **Users - All Users** page, select the **Multi-Factor Authentication** button at the top of the list of users.
 1. Locate one of the two users that you granted the **Global administrator** role to. Select that user.
 
-    > This is the user that will be used to approve the Euclid data requests you will initiate later in this lab. The user approving these requests must have multi-factor authentication (MFA) enabled.
+    > This is the user that will be used to approve the Graph Data Connect data requests you will initiate later in this lab. The user approving these requests must have multi-factor authentication (MFA) enabled.
 
     1. In the sidebar, select the **Enable** link under the list of **Quick Steps**.
 
@@ -51,9 +37,9 @@ In this step you will ensure that two users in your Office 365 tenant have the *
 
     1. Follow the prompts to enable multi-factor authentication on this user.
 
-## Configure Euclid consent request approver group
+## Configure Graph Data Connect consent request approver group
 
-In this step you will setup your Office 365 tenant to enable usage of Euclid.
+In this step you will setup your Office 365 tenant to enable usage of Graph Data Connect.
 
 1. Open a browser and navigate to your Microsoft 365 Admin Portal at [https://admin.microsoft.com](https://admin.microsoft.com)
 1. In the sidebar navigation, select **Groups**.
@@ -69,9 +55,9 @@ In this step you will setup your Office 365 tenant to enable usage of Euclid.
 1. On the **Members** section of the group dialog, select **Edit**
 1. Add the two users that you enabled the **Global administrator** role to this new group.
 
-## Enable Euclid in your Office 365 tenant
+## Enable Graph Data Connect in your Office 365 tenant
 
-In this step you will enable the Euclid service on your Office 365 tenant.
+In this step you will enable the Graph Data Connect service on your Office 365 tenant.
 
 1. While you are still logged into the Microsoft 365 Admin Portal, select the **Settings > Services & Add-ins** menu item.
 1. Select the **Managed access to Microsoft Graph in Microsoft Azure Preview** service.
