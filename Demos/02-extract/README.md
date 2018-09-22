@@ -67,9 +67,9 @@ In this step you will create an Azure Storage account where Graph Data Connect w
       ![Screenshot of the Azure Storage permissions](./../../Images/azstorage-config-01.png)
 
     1. Select the **Add** button in the navigation.
-    1. Use the following values to find the application you previously selected to grant it **Owner** permissions, then select **Save**:
+    1. Use the following values to find the application you previously selected to grant it the **Storage Account Contributor** role, then select **Save**:
 
-        - **Role**: Owner
+        - **Role**: Storage Account Contributor
         - **Assign access to**: Azure AD user, group or application
         - **Select**: Graph Data Connect Data Transfer (*the name of the Azure AD application you created previously*)
 1. Create a new container in the Azure Storage account
@@ -152,10 +152,12 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     1. Select the **New** button, then select **Azure Blob Storage**
         1. Select the **Connection** tab.
         1. Set the following values in the dialog, then select **Finish**:
-            - **Authentication method**: Use account key
-            - **Account selection method**: From Azure subscription
-            - **Azure subscription**: *select your Azure subscription*
-            - **Storage account name**: *select the storage account you previously created*
+            - **Authentication method**: Service principal
+            - **Service endpoint**: https://[REPLACE-AZSTORAGE-ACCOUNT].blob.core.windows.net/
+              - *replace `[REPLACE-AZSTORAGE-ACCOUNT]` with the storage account you previously created*
+            - **Tenant**: *enter the ID of your Azure tenant*
+            - **Service principal ID**: *enter the ID of the Azure AD application you previously created*
+            - **Service principal key**: *enter the hashed key of the Azure AD application you previously created*
 
             ![Screenshot of creating a new linked service](./../../Images/adfv2-setup-09.png)
 
