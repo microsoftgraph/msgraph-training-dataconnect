@@ -160,16 +160,16 @@ In this step you will create an Azure Storage account where Graph Data Connect w
     - **Secure transfer required**: Disabled
     - **Subscription**: *select your Azure subscription*
     - **Resource group**: *create / select an existing resource group*
-1. Once the Azure Storage account has been created, grant the Azure AD application previously created ownership over it.
+1. Once the Azure Storage account has been created, grant the Azure AD application previously created the proper access to it.
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Access control (IAM)**
 
       ![Screenshot of the Azure Storage permissions](./Images/azstorage-config-01.png)
 
     1. Select the **Add** button in the navigation.
-    1. Use the following values to find the application you previously selected to grant it **Owner** permissions, then select **Save**:
+    1. Use the following values to find the application you previously selected to grant it the **Storage Account Contributor** role, then select **Save**:
 
-        - **Role**: Owner
+        - **Role**: Storage Account Contributor
         - **Assign access to**: Azure AD user, group or application
         - **Select**: Graph Data Connect Data Transfer (*the name of the Azure AD application you created previously*)
 1. Create a new container in the Azure Storage account
@@ -207,11 +207,11 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
 1. When the full screen editor loads, update the URL to add the following querystring feature flag to enable the Office 365 Connector and reload the browser by pressing <kbd>ENTER</kbd>.
 
-      ```
-      ?feature.office365=true
-      ```
+    ```
+    ?feature.office365=true
+    ```
 
-      > NOTE: This feature flag will not be required once Graph Data Connect moves from Preview to Generally Available.
+    > NOTE: This feature flag will not be required once Graph Data Connect moves from Preview to Generally Available.
 
 1. Switch from the **Overview** to the **Author** experience by selecting it from the left-hand navigation:
 
@@ -252,10 +252,12 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     1. Select the **New** button, then select **Azure Blob Storage**
         1. Select the **Connection** tab.
         1. Set the following values in the dialog, then select **Finish**:
-            - **Authentication method**: Use account key
-            - **Account selection method**: From Azure subscription
-            - **Azure subscription**: *select your Azure subscription*
-            - **Storage account name**: *select the storage account you previously created*
+            - **Authentication method**: Service principal
+            - **Service endpoint**: https://[REPLACE-AZSTORAGE-ACCOUNT].blob.core.windows.net/
+              - *replace `[REPLACE-AZSTORAGE-ACCOUNT]` with the storage account you previously created*
+            - **Tenant**: *enter the ID of your Azure tenant*
+            - **Service principal ID**: *enter the ID of the Azure AD application you previously created*
+            - **Service principal key**: *enter the hashed key of the Azure AD application you previously created*
 
             ![Screenshot of creating a new linked service](./Images/adfv2-setup-09.png)
 
