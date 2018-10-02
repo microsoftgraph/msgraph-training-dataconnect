@@ -4,3 +4,4 @@ The following demos you show how to leverage Graph Data Connect to analyze email
 
 - [Setup tenant & get data out of Office 365 with Graph Data Connect and Data Factory](./01-setup)
 - [Extract Office 365 data with Graph Data Connect](./02-extract)
+- [Process the Exported Data](./03-app)
