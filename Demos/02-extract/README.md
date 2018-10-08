@@ -1,8 +1,8 @@
-# Extract Office 365 data with Graph Data Connect
+# Extract Office 365 data with Graph data connect
 
-In this exercise you will create, execute and approve an Azure Data Factory pipeline to extra data from Office 365 to an Azure Storage Blob for additional processing.
+In this demo you will create, execute and approve an Azure Data Factory pipeline to extra data from Office 365 to an Azure Storage Blob for additional processing.
 
-## Create Azure AD Application
+### Create Azure AD Application
 
 The first step is to create an Azure AD application that will be used as the security principal to run the data extraction process.
 
@@ -43,7 +43,7 @@ The first step is to create an Azure AD application that will be used as the sec
 
     ![Screenshot of the Azure AD Properties page](./../../Images/aad-app-setup-04.png)
 
-## Create Azure Storage Blob
+### Create Azure Storage Blob
 
 In this step you will create an Azure Storage account where Graph Data Connect will store the data extracted from Office 365 for further processing.
 
@@ -60,7 +60,7 @@ In this step you will create an Azure Storage account where Graph Data Connect w
     - **Secure transfer required**: Disabled
     - **Subscription**: *select your Azure subscription*
     - **Resource group**: *create / select an existing resource group*
-1. Once the Azure Storage account has been created, grant the Azure AD application previously created ownership over it.
+1. Once the Azure Storage account has been created, grant the Azure AD application previously created the proper access to it.
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Access control (IAM)**
 
@@ -79,7 +79,7 @@ In this step you will create an Azure Storage account where Graph Data Connect w
         - **Name**: maildump
         - **Public access level**: Private (no anonymous access)
 
-## Create an Azure Data Factory Pipeline
+### Create an Azure Data Factory Pipeline
 
 The next step is to use the Azure Data Factory to create a pipeline to extract the data from Office 365 to the Azure Storage account using Graph Data Connect.
 
@@ -104,14 +104,6 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 1. Once the Azure Data Factory resource is created, select the **Author & Monitor** tile to launch the Azure Data Factory full screen editor.
 
     ![Screenshot of the Azure Data Factory](./../../Images/adfv2-setup-02.png)
-
-1. When the full screen editor loads, update the URL to add the following querystring feature flag to enable the Office 365 Connector and reload the browser by pressing <kbd>ENTER</kbd>.
-
-      ```
-      ?feature.office365=true
-      ```
-
-      > NOTE: This feature flag will not be required once Graph Data Connect moves from Preview to Generally Available.
 
 1. Switch from the **Overview** to the **Author** experience by selecting it from the left-hand navigation:
 
@@ -171,7 +163,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 1. With the pipeline created, select the **Validate All** button at the top of the designer.
 1. After validating (*and fixing any issues that were found*), select the **Publish All** button at the top of the designer.
 
-## Execute the Azure Data Factory Pipeline
+### Execute the Azure Data Factory Pipeline
 
 With the pipeline created, now it's time to execute it.
 
@@ -201,7 +193,20 @@ With the pipeline created, now it's time to execute it.
 
     At this point, the activity run is internally paused until someone manually approves the consent request.
 
-## Approve Office 365 Consent Request
+### Approve Office 365 Consent Request - via Microsoft 365 Admin Center
+
+> NOTE: You can alternatively approve consent requests using Windows PowerShell which is demonstrated in the next section.
+
+1. Open a browser and navigate to your Microsoft 365 Admin Portal at [https://admin.microsoft.com](https://admin.microsoft.com)
+1. Replace the URL in the browser with the following link and select <kbd>ENTER</kbd>: https://portal.office.com/adminportal/home#/Settings/PrivilegedAccess
+1. Select a pending **Data Access Request**.
+1. In the **Data Access Request** callout, select the **Approve** button.
+
+    ![Screenshot showing an approved data access reqest in the Microsoft 365 Admin Center](./../../Images/adfv2-run-09.png)
+
+### Approve Office 365 Consent Request - via Windows PowerShell
+
+> NOTE: if you approved the request using the Microsoft 365 Admin Center, you can skip this section.
 
 In this step you will use Exchange Online PowerShell to find data requests that are pending consent and approve them so the Azure Data Factory pipeline(s) can continue.
 
@@ -258,7 +263,7 @@ This process of extracting the data can take some time depending on the size of 
 
 ![Screenshot of pipeline successful runs](./../../Images/adfv2-run-08.png)
 
-## Verify data extracted from Office 365 to Azure Storage Blob
+### Verify data extracted from Office 365 to Azure Storage Blob
 
 Once the pipeline completes, verify data has been extracted to the Azure Storage Blob.
 

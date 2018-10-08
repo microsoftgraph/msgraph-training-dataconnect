@@ -19,7 +19,7 @@ To complete this lab, you need the following:
   - If you do not have one, you obtain one (for free) by signing up to the [Office 365 Developer Program](https://developer.microsoft.com/office/dev-program).
   - Multiple Office 365 users with emails sent & received
   - Access to at least two accounts that meet the following requirements:
-    - global tenant administrators & have the **global administrator** role granted
+    - global tenant administrators & have the **global administrator** role granted (just one account)
     - have MFA enabled on both accounts
 - Exchange Online PowerShell for multi-factor authentication installed
   - More information: [Exchange Online PowerShell for multi-factor authentication](https://docs.microsoft.com/powershell/exchange/exchange-online/connect-to-exchange-online-powershell/mfa-connect-to-exchange-online-powershell)
@@ -29,9 +29,9 @@ To complete this lab, you need the following:
 
 <a name="exercise1"></a>
 
-## Exercise 1: Setup Office 365 Tenant and Enable Graph Data Connect
+## Exercise 1: Setup Office 365 Tenant and Enable Graph data connect
 
-Prior to leveraging Graph Data Connect for the first time, you need to configure your Office 365 tenant. This involves turning on the service and configuring a security group with permissions to approve data extraction requests. Users that will go in this group that will grant consent to data requests must have the **global administrator** role enabled.
+Prior to leveraging Graph Data Connect for the first time, you need to configure your Office 365 tenant. This involves turning on the service and configuring a security group with permissions to approve data extraction requests.
 
 ### Grant Azure AD users the **global administrator** role and enable MFA
 
@@ -86,14 +86,14 @@ In this step you will setup your Office 365 tenant to enable usage of Graph Data
 1. On the **Members** section of the group dialog, select **Edit**
 1. Add the two users that you enabled the **Global administrator** role to this new group.
 
-### Enable Graph Data Connect in your Office 365 tenant
+### Enable Graph data connect in your Office 365 tenant
 
 In this step you will enable the Graph Data Connect service on your Office 365 tenant.
 
 1. While you are still logged into the Microsoft 365 Admin Portal, select the **Settings > Services & Add-ins** menu item.
-1. Select the **Managed access to Microsoft Graph in Microsoft Azure Preview** service.
+1. Select the **Microsoft Graph data connect preview** service.
 
-    ![Screenshot of the Managed access to Microsoft Graph in Microsoft Azure Preview settings](./Images/m365-setup-01.png)
+    ![Screenshot of the Managed access to Microsoft Graph data connect preview settings](./Images/m365-setup-01.png)
 
 1. Enable the toggle button at the top of the dialog to **Turn Managed access to Microsoft Graph in Microsoft Azure Preview on or off for your entire organization.**
 1. Enter **Consent Request Approvers** (*or the name of the group you created previously*) in the **Group of users to make approval decisions** and select **Save**.
@@ -207,14 +207,6 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     ![Screenshot of the Azure Data Factory](./Images/adfv2-setup-02.png)
 
-1. When the full screen editor loads, update the URL to add the following querystring feature flag to enable the Office 365 Connector and reload the browser by pressing <kbd>ENTER</kbd>.
-
-    ```
-    ?feature.office365=true
-    ```
-
-    > NOTE: This feature flag will not be required once Graph Data Connect moves from Preview to Generally Available.
-
 1. Switch from the **Overview** to the **Author** experience by selecting it from the left-hand navigation:
 
     ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-03.png)
@@ -303,7 +295,20 @@ With the pipeline created, now it's time to execute it.
 
     At this point, the activity run is internally paused until someone manually approves the consent request.
 
-### Approve Office 365 Consent Request
+### Approve Office 365 Consent Request - via Microsoft 365 Admin Center
+
+> NOTE: You can alternatively approve consent requests using Windows PowerShell which is demonstrated in the next section.
+
+1. Open a browser and navigate to your Microsoft 365 Admin Portal at [https://admin.microsoft.com](https://admin.microsoft.com)
+1. Replace the URL in the browser with the following link and select <kbd>ENTER</kbd>: https://portal.office.com/adminportal/home#/Settings/PrivilegedAccess
+1. Select a pending **Data Access Request**.
+1. In the **Data Access Request** callout, select the **Approve** button.
+
+    ![Screenshot showing an approved data access reqest in the Microsoft 365 Admin Center](./Images/adfv2-run-09.png)
+
+### Approve Office 365 Consent Request - via Windows PowerShell
+
+> NOTE: if you approved the request using the Microsoft 365 Admin Center, you can skip this section.
 
 In this step you will use Exchange Online PowerShell to find data requests that are pending consent and approve them so the Azure Data Factory pipeline(s) can continue.
 

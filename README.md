@@ -1,10 +1,10 @@
 # Microsoft Graph Training Module - Graph Data Connect
 
-This module will introduce you the Microsoft Graph Data Connect
+This module will introduce you the Microsoft Graph data connect
 
-> NOTE: At the time of publishing this module, Microsoft Graph Data Connect is in preview and subject to change. When Microsoft Graph Data Connect support to Generally Available (GA), this module will be updated to reflect the latest guidance, libraries and steps required.
+> NOTE: At the time of publishing this module, Microsoft Graph data connect is in preview and subject to change. When Microsoft Graph data connect support to Generally Available (GA), this module will be updated to reflect the latest guidance, libraries and steps required.
 
-## Lab - Using Microsoft Graph Data Connect to Analyze to Find Subject Matter Experts
+## Lab - Using Microsoft Graph data connect to Analyze to Find Subject Matter Experts
 
 In this lab you will leverage Graph Data Connect to analyze emails from an organization in Office 365 to find subject matter experts on specific topics.
 
@@ -12,8 +12,8 @@ In this lab you will leverage Graph Data Connect to analyze emails from an organ
 
 ## Demos
 
-- [Setup tenant & get data out of Office 365 with Graph Data Connect and Data Factory](./Demos/01-setup)
-- [Extract Office 365 data with Graph Data Connect](./Demos/02-extract)
+- [Setup tenant & get data out of Office 365 with Graph data connect and Data Factory](./Demos/01-setup)
+- [Extract Office 365 data with Graph data connect](./Demos/02-extract)
 - [Process the Exported Data](./Demos/03-app)
 
 ## Contributors

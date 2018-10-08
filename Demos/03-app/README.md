@@ -1,6 +1,6 @@
 # Process the Exported Data
 
-In this demo you will create a simple ASP.NET MVC web application that will process the data you exported in the previous exercise.
+In this exercise you will create a simple ASP.NET MVC web application that will process the data you exported in the previous exercise.
 
 1. Create a new project:
     1. Open Visual Studio, and select **File > New > Project**. In the **New Project** dialog, do the following:
