@@ -210,8 +210,6 @@ With the pipeline created, now it's time to execute it.
 
 In this step you will use Exchange Online PowerShell to find data requests that are pending consent and approve them so the Azure Data Factory pipeline(s) can continue.
 
-> NOTE: To complete this step, you must have installed the [Exchange Online PowerShell for multi-factor authentication](https://docs.microsoft.com/powershell/exchange/exchange-online/connect-to-exchange-online-powershell/mfa-connect-to-exchange-online-powershell) & access to a user with the **global administrator** role applied, who is a member of the group that has rights to approve requests to data in Office 365, and has multi-factor authentication enabled. This user cannot be the same user that created and started the Azure Data Factory pipeline above.
-
 1. Open Windows PowerShell.
 1. Ensure your PowerShell session has enabled remotely signed scripts:
 

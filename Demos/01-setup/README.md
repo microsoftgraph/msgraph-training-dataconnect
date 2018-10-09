@@ -2,7 +2,7 @@
 
 Prior to leveraging Graph Data Connect for the first time, you need to configure your Office 365 tenant. This involves turning on the service and configuring a security group with permissions to approve data extraction requests.
 
-### Grant Azure AD users the **global administrator** role and enable MFA
+### Grant Azure AD users the **global administrator** role
 
 In this step you will ensure that two users in your Office 365 tenant have the **global administrator** role enabled and enable multi-factor authentication for one of them.
 
@@ -26,16 +26,6 @@ In this step you will ensure that two users in your Office 365 tenant have the *
         1. Select **Add role** button.
         1. Locate and select the **Global administrator** role and then select the **Select** button.
     1. Repeat these steps with another user that you will use in this lab.
-1. On the **Users - All Users** page, select the **Multi-Factor Authentication** button at the top of the list of users.
-1. Locate one of the two users that you granted the **Global administrator** role to. Select that user.
-
-    > This is the user that will be used to approve the Graph Data Connect data requests you will initiate later in this lab. The user approving these requests must have multi-factor authentication (MFA) enabled.
-
-    1. In the sidebar, select the **Enable** link under the list of **Quick Steps**.
-
-        ![Screenshot of enabling MFA for users](./../../Images/aad-user-setup-04.png)
-
-    1. Follow the prompts to enable multi-factor authentication on this user.
 
 ### Configure Graph Data Connect consent request approver group
 
