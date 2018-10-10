@@ -16,8 +16,11 @@ In this lab you will leverage Graph Data Connect to analyze emails from an organ
 - [Extract Office 365 data with Graph data connect](./Demos/02-extract)
 - [Process the Exported Data](./Demos/03-app)
 
-## Contributors
+## Watch the Module
 
+This module has been recorded and is available in the Office Development YouTube channel: [Microsoft Graph Data Connect](https://www.youtube.com/watch?v=jt18lCsVsvI)
+
+## Contributors
 | Roles                | Author(s)                                               |
 | -------------------- | ------------------------------------------------------- |
 | Lab Manuals / Slides | Andrew Connell (Microsoft MVP, Voitanos) @andrewconnell |
