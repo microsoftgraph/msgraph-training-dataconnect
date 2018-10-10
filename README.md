@@ -1,4 +1,4 @@
-# Microsoft Graph Training Module - Microsoft Graph data connect
+# Microsoft Graph training module - Microsoft Graph data connect
 
 This module introduces you to Microsoft Graph data connect.
 
