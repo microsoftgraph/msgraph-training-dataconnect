@@ -18,7 +18,7 @@ In this lab you will use Microsoft Graph data connect to analyze emails from an 
 
 ## Watch the module
 
-This module has been recorded and is available in the Office Development YouTube channel: [Microsoft Graph Data Connect](https://www.youtube.com/watch?v=jt18lCsVsvI)
+This module has been recorded and is available in the Office Development YouTube channel: [Microsoft Graph Data Connect](https://www.youtube.com/watch?v=p6wnd-dAKZ8)
 
 ## Contributors
 | Roles                | Author(s)                                               |
@@ -29,9 +29,10 @@ This module has been recorded and is available in the Office Development YouTube
 
 ## Version history
 
-| Version | Date            | Comments             |
-| ------- | --------------- | -------------------- |
-| 1.0     | October 2, 2018 | New module submitted |
+| Version |       Date       |          Comments          |
+| ------- | ---------------- | -------------------------- |
+| 1.1     | October 16, 2018 | Fix screencast link & typo |
+| 1.0     | October 2, 2018  | New module submitted       |
 
 ## Disclaimer
 
