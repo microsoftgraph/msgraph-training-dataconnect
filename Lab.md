@@ -1,6 +1,6 @@
-# Using Microsoft Graph Data Connect to Analyze to Find Subject Matter Experts
+# Using Microsoft Graph data connect to analyze emails to find subject matter experts
 
-In this lab you will leverage Graph Data Connect to analyze emails from an organization in Office 365 to find subject matter experts on specific topics.
+In this lab, you will use Microsoft Graph data connect to analyze emails from an organization in Office 365 to find subject matter experts on specific topics.
 
 ## In this lab
 
@@ -26,9 +26,9 @@ To complete this lab, you need the following:
 
 <a name="exercise1"></a>
 
-## Exercise 1: Setup Office 365 Tenant and Enable Graph data connect
+## Exercise 1: Setup Office 365 Tenant and Enable Microsoft Graph data connect
 
-Prior to leveraging Graph Data Connect for the first time, you need to configure your Office 365 tenant. This involves turning on the service and configuring a security group with permissions to approve data extraction requests.
+Prior to using Microsoft Graph data connect for the first time, you need to configure your Office 365 tenant. This involves turning on the service and configuring a security group with permissions to approve data extraction requests.
 
 ### Grant Azure AD users the **global administrator** role
 
@@ -55,9 +55,9 @@ In this step you will ensure that two users in your Office 365 tenant have the *
         1. Locate and select the **Global administrator** role and then select the **Select** button.
     1. Repeat these steps with another user that you will use in this lab.
 
-### Configure Graph Data Connect consent request approver group
+### Configure Microsoft Graph data connect consent request approver group
 
-In this step you will setup your Office 365 tenant to enable usage of Graph Data Connect.
+In this step you will setup your Office 365 tenant to enable usage of Microsoft Graph data connect.
 
 1. Open a browser and navigate to your Microsoft 365 Admin Portal at [https://admin.microsoft.com](https://admin.microsoft.com)
 1. In the sidebar navigation, select **Groups**.
@@ -73,9 +73,9 @@ In this step you will setup your Office 365 tenant to enable usage of Graph Data
 1. On the **Members** section of the group dialog, select **Edit**
 1. Add the two users that you enabled the **Global administrator** role to this new group.
 
-### Enable Graph data connect in your Office 365 tenant
+### Enable Microsoft Graph data connect in your Office 365 tenant
 
-In this step you will enable the Graph Data Connect service on your Office 365 tenant.
+In this step you will enable the Microsoft Graph data connect service on your Office 365 tenant.
 
 1. While you are still logged into the Microsoft 365 Admin Portal, select the **Settings > Services & Add-ins** menu item.
 1. Select the **Microsoft Graph data connect preview** service.
@@ -87,7 +87,7 @@ In this step you will enable the Graph Data Connect service on your Office 365 t
 
 <a name="exercise2"></a>
 
-## Exercise 2: Extract Office 365 data with Graph Data Connect
+## Exercise 2: Extract Office 365 data with Microsoft Graph data connect
 
 In this exercise you will create, execute and approve an Azure Data Factory pipeline to extra data from Office 365 to an Azure Storage Blob for additional processing.
 
@@ -105,7 +105,7 @@ The first step is to create an Azure AD application that will be used as the sec
 
 1. Use the following values to create a new Azure AD application and select **Create**:
 
-    - **Name**: Graph Data Connect Data Transfer
+    - **Name**: Microsoft Graph data connect Data Transfer
     - **Application type**: Web app / API
     - **Sign-on URL**: https://[tenantid].onmicrosoft.com/Graph Data ConnectDataTransfer
 
@@ -134,7 +134,7 @@ The first step is to create an Azure AD application that will be used as the sec
 
 ### Create Azure Storage Blob
 
-In this step you will create an Azure Storage account where Graph Data Connect will store the data extracted from Office 365 for further processing.
+In this step you will create an Azure Storage account where Microsoft Graph data connect will store the data extracted from Office 365 for further processing.
 
 1. Open a browser and navigate to your Azure Portal at [https://portal.azure.com](https://portal.azure.com)
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
@@ -160,7 +160,7 @@ In this step you will create an Azure Storage account where Graph Data Connect w
 
         - **Role**: Storage Account Contributor
         - **Assign access to**: Azure AD user, group or application
-        - **Select**: Graph Data Connect Data Transfer (*the name of the Azure AD application you created previously*)
+        - **Select**: Microsoft Graph data connect Data Transfer (*the name of the Azure AD application you created previously*)
 1. Create a new container in the Azure Storage account
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Blobs**
@@ -170,7 +170,7 @@ In this step you will create an Azure Storage account where Graph Data Connect w
 
 ### Create an Azure Data Factory Pipeline
 
-The next step is to use the Azure Data Factory to create a pipeline to extract the data from Office 365 to the Azure Storage account using Graph Data Connect.
+The next step is to use the Azure Data Factory to create a pipeline to extract the data from Office 365 to the Azure Storage account using Microsoft Graph data connect.
 
 1. Open a browser and navigate to your Azure Portal at [https://portal.azure.com](https://portal.azure.com)
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
@@ -210,7 +210,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     1. In the activity editor pane below the designer, select the **Source** tab, then select **New**.
     1. Locate the dataset **Office 365**, select it and then select the **Finish** button.
 
-        > NOTE: The feature flag you added to the URL earlier is what makes the **Office 365** connector appear in this step. This is only necessary when Graph Data Connect is in preview.
+        > NOTE: The feature flag you added to the URL earlier is what makes the **Office 365** connector appear in this step. This is only necessary when Microsoft Graph data connect is in preview.
 
     1. The designer will create a new tab for the Office 365 connector. Select the **Connection** tab in the connector's editor, then the **New** button.
     1. In the dialog that appears, enter the previously created Azure AD application's **Application ID** and **Password** in the **Service principal ID** & **Service principal key** fields, then select **Finish**.
@@ -324,7 +324,7 @@ In this step you will use Exchange Online PowerShell to find data requests that 
         >
         > If you simply close the PowerShell window, it will leave the connection open.
 
-1. Get a list of all pending data requests from Graph Data Connect by executing the following PowerShell:
+1. Get a list of all pending data requests from Microsoft Graph data connect by executing the following PowerShell:
 
     ```powershell
     Get-ElevatedAccessRequest | where {$_.RequestStatus -eq 'Pending'} | select RequestorUPN, Service, Identity, RequestedAccess | fl
