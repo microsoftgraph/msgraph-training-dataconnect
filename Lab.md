@@ -181,7 +181,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     > NOTE: Keep track of the user you are using in this step as you will need to switch to the other user you granted the *global administrator* role and that has *multi-factory authentication* enabled on their account in a later step.
 
-1. Select **Create resource** from the sidebar navigation.
+1. Select **Create a resource** from the sidebar navigation.
 1. Find the **Data Factory** resource type and use the following values to create it, then select **Create**:
 
     ![Screenshot creating an Azure Data Factory](./Images/adfv2-setup-01.png)
