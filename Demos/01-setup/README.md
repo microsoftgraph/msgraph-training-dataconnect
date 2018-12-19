@@ -42,6 +42,9 @@ In this step you will setup your Office 365 tenant to enable usage of Graph Data
     ![Screenshot of creating a new mail-enabled security group](./../../Images/m365-group-setup-01.png)
 
 1. Once the group has been created, select it.
+
+    > Change the View dropdown to **Mail-enabled security** if you do not see Consent Request Approvers in the list of groups 
+
 1. On the **Members** section of the group dialog, select **Edit**
 1. Add the two users that you enabled the **Global administrator** role to this new group.
 
