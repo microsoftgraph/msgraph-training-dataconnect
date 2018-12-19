@@ -159,11 +159,11 @@ In this step you will create an Azure Storage account where Graph Data Connect w
 
       ![Screenshot of the Azure Storage permissions](./Images/azstorage-config-01.png)
 
-    1. Select the **Add** button in the navigation.
+    1. Select the **Add role assignment** button in the navigation.
     1. Use the following values to find the application you previously selected to grant it the **Storage Account Contributor** role, then select **Save**:
 
         - **Role**: Storage Account Contributor
-        - **Assign access to**: Azure AD user, group or application
+        - **Assign access to**: Azure AD user, group or service principal
         - **Select**: Graph Data Connect Data Transfer (*the name of the Azure AD application you created previously*)
 1. Create a new container in the Azure Storage account
     1. Select the Azure Storage account
