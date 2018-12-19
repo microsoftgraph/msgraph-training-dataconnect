@@ -110,7 +110,7 @@ The first step is to create an Azure AD application that will be used as the sec
 
     - **Name**: Graph Data Connect Data Transfer
     - **Application type**: Web app / API
-    - **Sign-on URL**: https://[tenantid].onmicrosoft.com/Graph Data ConnectDataTransfer
+    - **Sign-on URL**: https://[tenantid].onmicrosoft.com/GraphDataConnectDataTransfer
 
 1. After creating the application, select it.
 1. Locate the **Application ID** and copy it as you will need it later in this lab. This will be referred to as the *service principal ID*.
