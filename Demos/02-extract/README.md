@@ -76,7 +76,7 @@ In this step you will create an Azure Storage account where Graph Data Connect w
 1. Create a new container in the Azure Storage account
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Blobs**
-    1. Select the **+Container** button at the top of the page and use the following values and then select **Ok**:
+    1. Select the **+Container** button at the top of the page and use the following values and then select **OK**:
         - **Name**: maildump
         - **Public access level**: Private (no anonymous access)
 
