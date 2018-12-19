@@ -144,11 +144,12 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         ![Screenshot of the Azure Data Factory designer](./../../Images/adfv2-setup-08.png)
 
     1. Select the **New** button, then select **Azure Blob Storage**
-        1. Select the **Connection** tab.
+        1. Select the **Connection** tab, then select **New**.
         1. Set the following values in the dialog, then select **Finish**:
             - **Authentication method**: Service principal
-            - **Service endpoint**: https://[REPLACE-AZSTORAGE-ACCOUNT].blob.core.windows.net/
-              - *replace `[REPLACE-AZSTORAGE-ACCOUNT]` with the storage account you previously created*
+            - **Azure subscription**: Select all
+            - **Storage account name**: [tenantid]gdcdump
+                > This is the storage account created earlier in this exercise.
             - **Tenant**: *enter the ID of your Azure tenant*
             - **Service principal ID**: *enter the ID of the Azure AD application you previously created*
             - **Service principal key**: *enter the hashed key of the Azure AD application you previously created*
