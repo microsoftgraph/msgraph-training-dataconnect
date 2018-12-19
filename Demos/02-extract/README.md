@@ -96,9 +96,10 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
 1. Use the following values to create a new Azure Data Factory resource, then select **Create**:
 
-    - **Name**: *create a unique name*
+    - **Name**: [tenantid]datafactory
+        > The tenant ID is used as part of the data factory name because it needs to be globally unique.
     - **Subscription**: *select your Azure subscription*
-    - **Resource group**: *create / select an existing resource group*
+    - **Resource group**: GraphDataConnect
     - **Version**: V2
     - **Location**: *pick an Azure region near you*
 
