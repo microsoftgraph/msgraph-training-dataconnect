@@ -141,7 +141,7 @@ In this step you will create an Azure Storage account where Graph Data Connect w
 
 1. Open a browser and navigate to your Azure Portal at [https://portal.azure.com](https://portal.azure.com)
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
-1. Select **Create resource** from the sidebar navigation.
+1. Select **Create a resource** from the sidebar navigation.
 1. Find the **Storage Account** resource type and use the following values to create it, then select **Create**:
     - **Name**: *create a unique name*
     - **Deployment model**: Resource manager
