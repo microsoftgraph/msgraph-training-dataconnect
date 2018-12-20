@@ -517,7 +517,7 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
         ```cs
         [HttpPost, ActionName("ShowMetrics")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ShowMetrics()
+        public ActionResult ShowMetrics()
         {
           var emailMetrics = ProcessEmails();
 
