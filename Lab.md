@@ -563,7 +563,7 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
     1. In the **Add View** dialog, set the following values and leave the remaining input controls to their default values and select **Add**:
         - **View name**: ShowMetrics
         - **Template**: List
-        - **Model class**: EmailMetrics (EMailMetrics.Models)
+        - **Model class**: EmailMetric (EMailMetric.Models)
 
         ![Screenshot of adding a new MVC view](./Images/vs-newView-03.png)
 
