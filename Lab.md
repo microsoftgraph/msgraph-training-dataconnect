@@ -152,12 +152,12 @@ In this step you will create an Azure Storage account where Graph Data Connect w
     - **Account kind**: StorageV2 (general purpose v2)
     - **Replication**: Read-access geo-redundant storage (RA-GRS)
     - **Access tier**: Hot
-1. Review that the settings match those shown in the previous step and select **Create**    
+1. Review that the settings match those shown in the previous step and select **Create**
 1. Once the Azure Storage account has been created, grant the Azure AD application previously created the proper access to it.
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Access control (IAM)**
 
-      ![Screenshot of the Azure Storage permissions](./Images/azstorage-config-01.png)
+        ![Screenshot of the Azure Storage permissions](./Images/azstorage-config-01.png)
 
     1. Select the **Add role assignment** button in the navigation.
     1. Use the following values to find the application you previously selected to grant it the **Storage Blob Data Contributor** role, then select **Save**:
@@ -569,31 +569,31 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
 
     1. Update the markup in the new **Views/EmailMetrics/ShowMetrics.cshtml** to the following. This will display the results of the calculations.
 
-    ```html
-    @model IEnumerable<EmailMetrics.Models.EmailMetric>
+        ```html
+        @model IEnumerable<EmailMetrics.Models.EmailMetric>
 
-    @{
-      ViewBag.Title = "ShowMetrics";
-    }
+        @{
+          ViewBag.Title = "ShowMetrics";
+        }
 
-    <h2>Email Metrics</h2>
+        <h2>Email Metrics</h2>
 
-    <table class="table">
-      <tr>
-        <th>Sender</th>
-        <th>Number of Recipients</th>
-      </tr>
+        <table class="table">
+          <tr>
+            <th>Sender</th>
+            <th>Number of Recipients</th>
+          </tr>
 
-      @foreach (var item in Model)
-      {
-      <tr>
-        <td>@Html.DisplayFor(modelItem => item.Email)</td>
-        <td>@Html.DisplayFor(modelItem => item.RecipientsToEmail)</td>
-      </tr>
-      }
+          @foreach (var item in Model)
+          {
+          <tr>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+            <td>@Html.DisplayFor(modelItem => item.RecipientsToEmail)</td>
+          </tr>
+          }
 
-    </table>
-    ```
+        </table>
+        ```
 
 1. Update the navigation to have a way to get to the new controller:
     1. In the **Solution Explorer** tool window, locate and open the file **Views/Shared/_Layout.cshtml**.
