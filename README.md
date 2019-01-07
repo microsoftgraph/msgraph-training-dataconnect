@@ -24,15 +24,18 @@ This module has been recorded and is available in the Office Development YouTube
 | Roles                | Author(s)                                               |
 | -------------------- | ------------------------------------------------------- |
 | Lab Manuals / Slides | Andrew Connell (Microsoft MVP, Voitanos) @andrewconnell |
+| QA                   | Rob Windsor (Microsoft MVP, PAIT Group) @rob-windsor    |
 | Sponsor / Support    | Tyler Lenig (Microsoft) @tlenig                         |
 | Sponsor / Support    | Rishi Girish (Microsoft) @rgirish2                      |
 
 ## Version history
 
-| Version |       Date       |          Comments          |
-| ------- | ---------------- | -------------------------- |
-| 1.1     | October 16, 2018 | Fix screencast link & typo |
-| 1.0     | October 2, 2018  | New module submitted       |
+| Version |       Date        |                 Comments                  |
+| ------- | ----------------- | ----------------------------------------- |
+| 1.3     | December 21, 2018 | 2019Q2 content refresh                    |
+| 1.2     | November 2, 2018  | Update required IAM role for blob storage |
+| 1.1     | October 16, 2018  | Fix screencast link & typo                |
+| 1.0     | October 2, 2018   | New module submitted                      |
 
 ## Disclaimer
 

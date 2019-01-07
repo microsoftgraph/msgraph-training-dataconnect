@@ -25,8 +25,8 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
 
 1. Create a new model class that will be used to store the email metrics and in the view of the web application.
     1. In the **Solution Explorer** tool window, right-click the **Models** folder and select **Add > Class**.
-    1. In the **Add New Item** dialog, select **Class**, set the name of the file to **EmailMetrics.cs** and select **Add**.
-    1. Add the following code to the class **EmailMetrics** you just created:
+    1. In the **Add New Item** dialog, select **Class**, set the name of the file to **EmailMetric.cs** and select **Add**.
+    1. Add the following code to the class **EmailMetric** you just created:
 
         ```cs
         public string Email;
@@ -144,7 +144,7 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
         ```cs
         [HttpPost, ActionName("ShowMetrics")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ShowMetrics()
+        public ActionResult ShowMetrics()
         {
           var emailMetrics = ProcessEmails();
 
@@ -190,7 +190,7 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
     1. In the **Add View** dialog, set the following values and leave the remaining input controls to their default values and select **Add**:
         - **View name**: ShowMetrics
         - **Template**: List
-        - **Model class**: EmailMetrics (EMailMetrics.Models)
+        - **Model class**: EmailMetric (EMailMetric.Models)
 
         ![Screenshot of adding a new MVC view](./../../Images/vs-newView-03.png)
 
