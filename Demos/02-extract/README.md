@@ -260,7 +260,7 @@ In this step you will use Exchange Online PowerShell to find data requests that 
 
     ![Screenshot of activity run status](./../../Images/adfv2-run-07.png)
 
-This process of extracting the data can take some time depending on the size of your Office 365 tenant as shown in the following examples:
+This process of extracting the data can take some time depending on the size of your Office 365 tenant as shown in the following example:
 
 ![Screenshot of pipeline successful runs](./../../Images/adfv2-run-08.png)
 
