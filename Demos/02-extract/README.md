@@ -111,6 +111,19 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     ![Screenshot of the Azure Data Factory menu](./../../Images/adfv2-setup-03.png)
 
+1. [Optional] By default the Azure Data Factory will use an **Integration Runtime** that is auto-resolving the region. As the Microsoft Graph Data Connect requires that your source and destination, and integration runtime to exist in the same Office 365 region, it is recommended that you create a new Integration Runtime with a fixed region.
+    
+    1. Click on *Connections*, at the bottom of the screen, then choose *Integration Runtimes*
+    1. Click on *New* and then select the first option (*Perform data movement and dispatch activities to external computes*), followed by *Next*.
+    1. Choose *Azure* as the environment and click *Next*
+    1. In the final screen fill in as follows and then click *Finish*.
+
+        - **Name**: *name of your integration runtime*
+        - **Description**: *enter a description*
+        - **Region**: *choose the region that matches your Office 365 region*
+
+    ![Screenshot of the Integration Runtime Setup](./../../Images/adfv2-setup-11.png)
+
 1. Create a new pipeline by selecting the plus icon, then **pipeline**:
 
     ![Screenshot of the Azure Data Factory menu](./../../Images/adfv2-setup-04.png)
@@ -127,6 +140,8 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     1. The designer will create a new tab for the Office 365 connector. Select the **Connection** tab in the connector's editor, then the **New** button.
     1. In the dialog that appears, enter the previously created Azure AD application's **Application ID** and **Password** in the **Service principal ID** & **Service principal key** fields, then select **Finish**.
+
+        > NOTE: If you created a dedicated Integration Runtime, select it in the **Connect via integration runtime**.
 
         ![Screenshot creating a new Office 365 connector in Azure Data Factory](./../../Images/adfv2-setup-06.png)
 
@@ -153,6 +168,8 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
             - **Tenant**: *enter the ID of your Azure tenant*
             - **Service principal ID**: *enter the ID of the Azure AD application you previously created*
             - **Service principal key**: *enter the hashed key of the Azure AD application you previously created*
+
+            > NOTE: If you created a dedicated Integration Runtime, select it in the **Connect via integration runtime**.
 
             ![Screenshot of creating a new linked service](./../../Images/adfv2-setup-09.png)
 
