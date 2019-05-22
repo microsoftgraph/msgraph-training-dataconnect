@@ -147,7 +147,7 @@ In this step you will create an Azure Storage account where Microsoft Graph data
     - **Resource group**: GraphDataConnect (*or select an existing resource group*)
     - **Storage account name**: [tenantid]gdcdump
         > The tenant ID is used as part of the storage account name because it needs to be globally unique.
-    - **Location**: *pick an Azure region near you*
+    - **Location**: *pick an Azure region in the same region as your Office 365 region*
     - **Performance**: Standard
     - **Account kind**: StorageV2 (general purpose v2)
     - **Replication**: Read-access geo-redundant storage (RA-GRS)
@@ -192,7 +192,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     - **Subscription**: *select your Azure subscription*
     - **Resource group**: GraphDataConnect
     - **Version**: V2
-    - **Location**: *pick an Azure region near you*
+    - **Location**: *pick an Azure region in the same region as your Office 365 region*
 
 1. Once the Azure Data Factory resource is created, select the **Author & Monitor** tile to launch the Azure Data Factory full screen editor.
 
@@ -201,6 +201,19 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 1. Switch from the **Overview** to the **Author** experience by selecting it from the left-hand navigation:
 
     ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-03.png)
+
+1. [Optional] By default, the Azure Data Factory will use an *Integration Runtime* that is auto-resolving the region. As the Microsoft Graph Data Connect requires that your source and destination, and integration runtime to exist in the same Office 365 region, it is recommended that you create a new Integration Runtime with a fixed region.
+    
+    1. At the bottom of the screen, select **Connections** > **Integration Runtimes**.
+    1. Select **New** > **Perform data movement and dispatch activities to external computes** and then select **Next**.
+    1. Select **Azure** for the environment and select **Next**.
+    1. Use the following details to complete the form on the final screen and then select **Finish**:
+
+        - **Name**: *name of your integration runtime*
+        - **Description**: *enter a description*
+        - **Region**: *select the region that matches your Office 365 region*
+
+    ![Screenshot of the Integration Runtime Setup](./../../Images/adfv2-setup-11.png)
 
 1. Create a new pipeline by selecting the plus icon, then **pipeline**:
 
@@ -218,6 +231,8 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     1. The designer will create a new tab for the Office 365 connector. Select the **Connection** tab in the connector's editor, then the **New** button.
     1. In the dialog that appears, enter the previously created Azure AD application's **Application ID** and **Password** in the **Service principal ID** & **Service principal key** fields, then select **Finish**.
+
+        > NOTE: If you created a dedicated Integration Runtime, select it in the **Connect via integration runtime** dropdown.
 
         ![Screenshot creating a new Office 365 connector in Azure Data Factory](./Images/adfv2-setup-06.png)
 
@@ -244,6 +259,8 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
             - **Tenant**: *enter the ID of your Azure tenant*
             - **Service principal ID**: *enter the ID of the Azure AD application you previously created*
             - **Service principal key**: *enter the hashed key of the Azure AD application you previously created*
+
+            > NOTE: If you created a dedicated Integration Runtime, select it in the **Connect via integration runtime** dropdown.
 
             ![Screenshot of creating a new linked service](./Images/adfv2-setup-09.png)
 
