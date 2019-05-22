@@ -214,7 +214,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     1. Select the activity in the designer.
     1. In the activity editor pane below the designer, select the **Source** tab, then select **New**.
-    1. Locate the dataset **Office 365 (Preview)**, select it and then select the **Finish** button.
+    1. Locate the dataset **Office 365**, select it and then select the **Finish** button.
 
         > NOTE: The feature flag you added to the URL earlier is what makes the **Office 365** connector appear in this step. This is only necessary when Microsoft Graph data connect is in preview.
 
