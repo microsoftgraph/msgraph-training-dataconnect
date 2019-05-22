@@ -1,10 +1,13 @@
-﻿@{
+﻿@* Copyright (c) Microsoft Corporation. All rights reserved. *@
+@* Licensed under the MIT license. *@
+
+@{
     ViewBag.Title = "Index";
 }
 
 <h2>Email Metrics</h2>
 
-This application will look at the email data for emails extracted to the Azure Blob Storage account and display the total number of recipients from each sender.
+    This application will look at the email data for emails extracted to the Azure Blob Storage account and display the total number of recipients from each sender.
 
 @using (Html.BeginForm("ShowMetrics", "EmailMetrics", FormMethod.Post))
 {
@@ -17,4 +20,3 @@ This application will look at the email data for emails extracted to the Azure B
         <em>Please be patient as this can take a few moments to calculate depending on the size of the exported data...</em>
     </div>
 }
-

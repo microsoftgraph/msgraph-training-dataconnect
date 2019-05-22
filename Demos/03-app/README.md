@@ -62,80 +62,76 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
         CloudBlobContainer _storageContainer;
         ```
 
-    1. Add the following method to the `EmailMetricsController` class. This will process an Azure blob and return back a object representing the email account and how many recipients there were combined across all emails found for the extracted account:
+    1. Add the following method to the `EmailMetricsController` class. This will process an Azure blob and update a collection representing the email accounts and how many recipients there were combined across all emails found for the extracted accounts:
 
         ```cs
-        private Models.EmailMetric ProcessEmail(CloudBlob emailBlob)
+        private void ProcessBlobEmails(List<Models.EmailMetric> emailMetrics, CloudBlob emailBlob)
         {
-          var emailMetric = new Models.EmailMetric();
-
-          using (var reader = new StreamReader(emailBlob.OpenRead()))
-          {
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            using (var reader = new StreamReader(emailBlob.OpenRead()))
             {
-              var jsonObj = JObject.Parse(line);
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    var jsonObj = JObject.Parse(line);
 
-              // extract sender
-              var sender = jsonObj.SelectToken("Sender.EmailAddress.Address")?.ToString();
+                    // extract sender
+                    var sender = jsonObj.SelectToken("Sender.EmailAddress.Address")?.ToString();
 
-              // extract and count up recipients
-              var totalRecipients = 0;
-              totalRecipients += jsonObj.SelectToken("ToRecipients").Children().Count();
-              totalRecipients += jsonObj.SelectToken("CcRecipients").Children().Count();
-              totalRecipients += jsonObj.SelectToken("BccRecipients").Children().Count();
+                    // extract and count up recipients
+                    var totalRecipients = 0;
+                    totalRecipients += jsonObj.SelectToken("ToRecipients").Children().Count();
+                    totalRecipients += jsonObj.SelectToken("CcRecipients").Children().Count();
+                    totalRecipients += jsonObj.SelectToken("BccRecipients").Children().Count();
 
-              emailMetric.Email = sender;
-              emailMetric.RecipientsToEmail = totalRecipients;
+                    var emailMetric = new Models.EmailMetric();
+                    emailMetric.Email = sender;
+                    emailMetric.RecipientsToEmail = totalRecipients;
+
+                    // if already have this sender... 
+                    var existingMetric = emailMetrics.FirstOrDefault(metric => metric.Email == emailMetric.Email);
+                    if (existingMetric != null)
+                    {
+                        existingMetric.RecipientsToEmail += emailMetric.RecipientsToEmail;
+                    }
+                    else
+                    {
+                        emailMetrics.Add(emailMetric);
+                    }
+                }
             }
-          }
-
-          return emailMetric;
         }
         ```
 
-    1. Add the following method to the `EmailMetricsController` class. This will enumerate through all blobs in the specified Azure Storage account's specified container and send each one to `ProcessEmail()` method added in the last step:
+    1. Add the following method to the `EmailMetricsController` class. This will enumerate through all blobs in the specified Azure Storage account's specified container and send each one to `ProcessBlobEmails()` method added in the last step:
 
         ```cs
-        private List<Models.EmailMetric> ProcessEmails()
+        private List<Models.EmailMetric> ProcessBlobFiles()
         {
-          var emailMetrics = new List<Models.EmailMetric>();
+            var emailMetrics = new List<Models.EmailMetric>();
 
-          // connect to the storage account
-          _storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["AzureStorageConnectionString-1"]);
-          _storageClient = _storageAccount.CreateCloudBlobClient();
+            // connect to the storage account
+            _storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["AzureStorageConnectionString-1"]);
+            _storageClient = _storageAccount.CreateCloudBlobClient();
 
-          // connect to the container
-          _storageContainer = _storageClient.GetContainerReference("maildump");
+            // connect to the container
+            _storageContainer = _storageClient.GetContainerReference("maildump");
 
-          // get a list of all emails
-          var blobResults = _storageContainer.ListBlobs();
+            // get a list of all emails
+            var blobResults = _storageContainer.ListBlobs();
 
-          // process each email
-          foreach (IListBlobItem blob in blobResults)
-          {
-            if (blob.GetType() == typeof(CloudBlockBlob))
+            // process each email
+            foreach (IListBlobItem blob in blobResults)
             {
-              var cloudBlob = (CloudBlockBlob)blob;
-              var blockBlob = _storageContainer.GetBlobReference(cloudBlob.Name);
+                if (blob.GetType() == typeof(CloudBlockBlob))
+                {
+                    var cloudBlob = (CloudBlockBlob)blob;
+                    var blockBlob = _storageContainer.GetBlobReference(cloudBlob.Name);
 
-              var emailMetric = ProcessEmail(blockBlob);
-
-              // if already have this sender... 
-              var existingMetric = emailMetrics.FirstOrDefault(metric => metric.Email == emailMetric.Email);
-              if (existingMetric != null)
-              {
-                existingMetric.RecipientsToEmail += emailMetric.RecipientsToEmail;
-              }
-              else
-              {
-                emailMetrics.Add(emailMetric);
-              }
-
+                    ProcessBlobEmails(emailMetrics, blockBlob);
+                }
             }
-          }
 
-          return emailMetrics;
+            return emailMetrics;
         }
         ```
 

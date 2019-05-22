@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -28,15 +31,13 @@ namespace EmailMetrics.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ShowMetrics()
         {
-            var emailMetrics = ProcessEmails();
+            var emailMetrics = ProcessBlobFiles();
 
             return View(emailMetrics);
         }
 
-        private Models.EmailMetric ProcessEmail(CloudBlob emailBlob)
+        private void ProcessBlobEmails(List<Models.EmailMetric> emailMetrics, CloudBlob emailBlob)
         {
-            var emailMetric = new Models.EmailMetric();
-
             using (var reader = new StreamReader(emailBlob.OpenRead()))
             {
                 string line;
@@ -53,15 +54,25 @@ namespace EmailMetrics.Controllers
                     totalRecipients += jsonObj.SelectToken("CcRecipients").Children().Count();
                     totalRecipients += jsonObj.SelectToken("BccRecipients").Children().Count();
 
+                    var emailMetric = new Models.EmailMetric();
                     emailMetric.Email = sender;
                     emailMetric.RecipientsToEmail = totalRecipients;
+
+                    // if already have this sender... 
+                    var existingMetric = emailMetrics.FirstOrDefault(metric => metric.Email == emailMetric.Email);
+                    if (existingMetric != null)
+                    {
+                        existingMetric.RecipientsToEmail += emailMetric.RecipientsToEmail;
+                    }
+                    else
+                    {
+                        emailMetrics.Add(emailMetric);
+                    }
                 }
             }
-
-            return emailMetric;
         }
 
-        private List<Models.EmailMetric> ProcessEmails()
+        private List<Models.EmailMetric> ProcessBlobFiles()
         {
             var emailMetrics = new List<Models.EmailMetric>();
 
@@ -83,19 +94,7 @@ namespace EmailMetrics.Controllers
                     var cloudBlob = (CloudBlockBlob)blob;
                     var blockBlob = _storageContainer.GetBlobReference(cloudBlob.Name);
 
-                    var emailMetric = ProcessEmail(blockBlob);
-
-                    // if already have this sender... 
-                    var existingMetric = emailMetrics.FirstOrDefault(metric => metric.Email == emailMetric.Email);
-                    if (existingMetric != null)
-                    {
-                        existingMetric.RecipientsToEmail += emailMetric.RecipientsToEmail;
-                    }
-                    else
-                    {
-                        emailMetrics.Add(emailMetric);
-                    }
-
+                    ProcessBlobEmails(emailMetrics, blockBlob);
                 }
             }
 

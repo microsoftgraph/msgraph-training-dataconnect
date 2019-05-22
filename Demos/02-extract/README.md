@@ -67,7 +67,7 @@ In this step you will create an Azure Storage account where Graph Data Connect w
 
       ![Screenshot of the Azure Storage permissions](./../../Images/azstorage-config-01.png)
 
-    1. Select the **Add role assignment** button in the navigation.
+    1. Select the **Add** button in the **Add a role assignment** block.
     1. Use the following values to find the application you previously selected to grant it the **Storage Blob Data Contributor** role, then select **Save**:
 
         - **Role**: Storage Blob Data Contributor
@@ -189,7 +189,7 @@ With the pipeline created, now it's time to execute it.
 
 > NOTE: In the current Preview state, some of the tasks in this section can take a while to appear. Such as the request for consent may take 5-30 minutes for the consent request to appear and it is not uncommon for the entire process (start, requesting consent & after approving the consent completing the pipeline run) to take over 40 minutes.
 
-1. In the Azure Data Factory designer, with the pipeline open, select **Trigger > Trigger Now**:
+1. In the Azure Data Factory designer, with the pipeline open, select **Add trigger > Trigger Now**:
 
     ![Screenshot starting a job](./../../Images/adfv2-run-01.png)
 
@@ -277,7 +277,7 @@ In this step you will use Exchange Online PowerShell to find data requests that 
 
     ![Screenshot of activity run status](./../../Images/adfv2-run-07.png)
 
-This process of extracting the data can take some time depending on the size of your Office 365 tenant as shown in the following examples:
+This process of extracting the data can take some time depending on the size of your Office 365 tenant as shown in the following example:
 
 ![Screenshot of pipeline successful runs](./../../Images/adfv2-run-08.png)
 

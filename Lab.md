@@ -15,6 +15,7 @@ To complete this lab, you need the following:
 - Microsoft Azure subscription
   - If you do not have one, you can obtain one (for free) here: [https://azure.microsoft.com/free](https://azure.microsoft.com/free/)
   - The account used to signin must have the **global administrator** role granted to it.
+  - The Azure subbscription must be in the same tenant as the Office 365 tenant as Graph Data Connect will only export data to an Azure subbscription in the same tenant, not across tenants.
 - Office 365 tenancy
   - If you do not have one, you obtain one (for free) by signing up to the [Office 365 Developer Program](https://developer.microsoft.com/office/dev-program).
   - Multiple Office 365 users with emails sent & received
@@ -159,11 +160,12 @@ In this step you will create an Azure Storage account where Microsoft Graph data
 
         ![Screenshot of the Azure Storage permissions](./Images/azstorage-config-01.png)
 
-    1. Select the **Add role assignment** button in the navigation.
+    1. Select the **Add** button in the **Add a role assignment** block.
     1. Use the following values to find the application you previously selected to grant it the **Storage Blob Data Contributor** role, then select **Save**:
         - **Role**: Storage Account Contributor
         - **Assign access to**: Azure AD user, group or application
         - **Select**: Microsoft Graph data connect Data Transfer (*the name of the Azure AD application you created previously*)
+
 1. Create a new container in the Azure Storage account
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Blobs**
@@ -280,7 +282,7 @@ With the pipeline created, now it's time to execute it.
 
 > NOTE: In the current Preview state, some of the tasks in this section can take a while to appear. Such as the request for consent may take 5-30 minutes for the consent request to appear and it is not uncommon for the entire process (start, requesting consent & after approving the consent completing the pipeline run) to take over 40 minutes.
 
-1. In the Azure Data Factory designer, with the pipeline open, select **Trigger > Trigger Now**:
+1. In the Azure Data Factory designer, with the pipeline open, select **Add trigger > Trigger Now**:
 
     ![Screenshot starting a job](./Images/adfv2-run-01.png)
 
@@ -368,7 +370,7 @@ In this step you will use Exchange Online PowerShell to find data requests that 
 
     ![Screenshot of activity run status](./Images/adfv2-run-07.png)
 
-This process of extracting the data can take some time depending on the size of your Office 365 tenant as shown in the following examples:
+This process of extracting the data can take some time depending on the size of your Office 365 tenant as shown in the following example:
 
 ![Screenshot of pipeline successful runs](./Images/adfv2-run-08.png)
 
@@ -451,80 +453,76 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
         CloudBlobContainer _storageContainer;
         ```
 
-    1. Add the following method to the `EmailMetricsController` class. This will process an Azure blob and return back a object representing the email account and how many recipients there were combined across all emails found for the extracted account:
+    1. Add the following method to the `EmailMetricsController` class. This will process an Azure blob and update a collection representing the email accounts and how many recipients there were combined across all emails found for the extracted accounts:
 
         ```cs
-        private Models.EmailMetric ProcessEmail(CloudBlob emailBlob)
+        private void ProcessBlobEmails(List<Models.EmailMetric> emailMetrics, CloudBlob emailBlob)
         {
-          var emailMetric = new Models.EmailMetric();
-
-          using (var reader = new StreamReader(emailBlob.OpenRead()))
-          {
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            using (var reader = new StreamReader(emailBlob.OpenRead()))
             {
-              var jsonObj = JObject.Parse(line);
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    var jsonObj = JObject.Parse(line);
 
-              // extract sender
-              var sender = jsonObj.SelectToken("Sender.EmailAddress.Address")?.ToString();
+                    // extract sender
+                    var sender = jsonObj.SelectToken("Sender.EmailAddress.Address")?.ToString();
 
-              // extract and count up recipients
-              var totalRecipients = 0;
-              totalRecipients += jsonObj.SelectToken("ToRecipients").Children().Count();
-              totalRecipients += jsonObj.SelectToken("CcRecipients").Children().Count();
-              totalRecipients += jsonObj.SelectToken("BccRecipients").Children().Count();
+                    // extract and count up recipients
+                    var totalRecipients = 0;
+                    totalRecipients += jsonObj.SelectToken("ToRecipients").Children().Count();
+                    totalRecipients += jsonObj.SelectToken("CcRecipients").Children().Count();
+                    totalRecipients += jsonObj.SelectToken("BccRecipients").Children().Count();
 
-              emailMetric.Email = sender;
-              emailMetric.RecipientsToEmail = totalRecipients;
+                    var emailMetric = new Models.EmailMetric();
+                    emailMetric.Email = sender;
+                    emailMetric.RecipientsToEmail = totalRecipients;
+
+                    // if already have this sender... 
+                    var existingMetric = emailMetrics.FirstOrDefault(metric => metric.Email == emailMetric.Email);
+                    if (existingMetric != null)
+                    {
+                        existingMetric.RecipientsToEmail += emailMetric.RecipientsToEmail;
+                    }
+                    else
+                    {
+                        emailMetrics.Add(emailMetric);
+                    }
+                }
             }
-          }
-
-          return emailMetric;
         }
         ```
 
-    1. Add the following method to the `EmailMetricsController` class. This will enumerate through all blobs in the specified Azure Storage account's specified container and send each one to `ProcessEmail()` method added in the last step:
+    1. Add the following method to the `EmailMetricsController` class. This will enumerate through all blobs in the specified Azure Storage account's specified container and send each one to `ProcessBlobEmails()` method added in the last step:
 
         ```cs
-        private List<Models.EmailMetric> ProcessEmails()
+        private List<Models.EmailMetric> ProcessBlobFiles()
         {
-          var emailMetrics = new List<Models.EmailMetric>();
+            var emailMetrics = new List<Models.EmailMetric>();
 
-          // connect to the storage account
-          _storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["AzureStorageConnectionString-1"]);
-          _storageClient = _storageAccount.CreateCloudBlobClient();
+            // connect to the storage account
+            _storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["AzureStorageConnectionString-1"]);
+            _storageClient = _storageAccount.CreateCloudBlobClient();
 
-          // connect to the container
-          _storageContainer = _storageClient.GetContainerReference("maildump");
+            // connect to the container
+            _storageContainer = _storageClient.GetContainerReference("maildump");
 
-          // get a list of all emails
-          var blobResults = _storageContainer.ListBlobs();
+            // get a list of all emails
+            var blobResults = _storageContainer.ListBlobs();
 
-          // process each email
-          foreach (IListBlobItem blob in blobResults)
-          {
-            if (blob.GetType() == typeof(CloudBlockBlob))
+            // process each email
+            foreach (IListBlobItem blob in blobResults)
             {
-              var cloudBlob = (CloudBlockBlob)blob;
-              var blockBlob = _storageContainer.GetBlobReference(cloudBlob.Name);
+                if (blob.GetType() == typeof(CloudBlockBlob))
+                {
+                    var cloudBlob = (CloudBlockBlob)blob;
+                    var blockBlob = _storageContainer.GetBlobReference(cloudBlob.Name);
 
-              var emailMetric = ProcessEmail(blockBlob);
-
-              // if already have this sender... 
-              var existingMetric = emailMetrics.FirstOrDefault(metric => metric.Email == emailMetric.Email);
-              if (existingMetric != null)
-              {
-                existingMetric.RecipientsToEmail += emailMetric.RecipientsToEmail;
-              }
-              else
-              {
-                emailMetrics.Add(emailMetric);
-              }
-
+                    ProcessBlobEmails(emailMetrics, blockBlob);
+                }
             }
-          }
 
-          return emailMetrics;
+            return emailMetrics;
         }
         ```
 
