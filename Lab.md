@@ -32,7 +32,7 @@ Prior to using Microsoft Graph data connect for the first time, you need to conf
 
 ### Grant Azure AD users the **global administrator** role
 
-In this step you will ensure that two users in your Office 365 tenant have the **global administrator** role enabled and enable multi-factor authentication for one of them.
+In this step you will ensure that two users in your Office 365 tenant have the **global administrator** role enabled.
 
 1. Open a browser and navigate to your Azure Portal at [https://portal.azure.com](https://portal.azure.com)
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
@@ -70,6 +70,9 @@ In this step you will setup your Office 365 tenant to enable usage of Microsoft 
     ![Screenshot of creating a new mail-enabled security group](./Images/m365-group-setup-01.png)
 
 1. Once the group has been created, select it.
+
+    > Change the View dropdown to **Mail-enabled security** if you do not see Consent Request Approvers in the list of groups 
+
 1. On the **Members** section of the group dialog, select **Edit**
 1. Add the two users that you enabled the **Global administrator** role to this new group.
 
@@ -107,7 +110,7 @@ The first step is to create an Azure AD application that will be used as the sec
 
     - **Name**: Microsoft Graph data connect Data Transfer
     - **Application type**: Web app / API
-    - **Sign-on URL**: https://[tenantid].onmicrosoft.com/Graph Data ConnectDataTransfer
+    - **Sign-on URL**: https://[tenantid].onmicrosoft.com/GraphDataConnectDataTransfer
 
 1. After creating the application, select it.
 1. Locate the **Application ID** and copy it as you will need it later in this lab. This will be referred to as the *service principal ID*.
@@ -138,33 +141,33 @@ In this step you will create an Azure Storage account where Microsoft Graph data
 
 1. Open a browser and navigate to your Azure Portal at [https://portal.azure.com](https://portal.azure.com)
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
-1. Select **Create resource** from the sidebar navigation.
-1. Find the **Storage Account** resource type and use the following values to create it, then select **Create**:
-    - **Name**: *create a unique name*
-    - **Deployment model**: Resource manager
-    - **Account kind**: Blob storage
-    - **Location**: *pick an Azure region near you*
-    - **Replication**: Locally redundant storage (LRS)
-    - **Performance**: Standard
-    - **Secure transfer required**: Disabled
+1. Select **Create a resource** from the sidebar navigation.
+1. Find the **Storage Account** resource type and use the following values to create it, then select **Review + create**:
     - **Subscription**: *select your Azure subscription*
-    - **Resource group**: *create / select an existing resource group*
+    - **Resource group**: GraphDataConnect (*or select an existing resource group*)
+    - **Storage account name**: [tenantid]gdcdump
+        > The tenant ID is used as part of the storage account name because it needs to be globally unique.
+    - **Location**: *pick an Azure region near you*
+    - **Performance**: Standard
+    - **Account kind**: StorageV2 (general purpose v2)
+    - **Replication**: Read-access geo-redundant storage (RA-GRS)
+    - **Access tier**: Hot
+1. Review that the settings match those shown in the previous step and select **Create**
 1. Once the Azure Storage account has been created, grant the Azure AD application previously created the proper access to it.
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Access control (IAM)**
 
-      ![Screenshot of the Azure Storage permissions](./Images/azstorage-config-01.png)
+        ![Screenshot of the Azure Storage permissions](./Images/azstorage-config-01.png)
 
-    1. Select the **Add** button in the navigation.
-    1. Use the following values to find the application you previously selected to grant it the **Storage Account Contributor** role, then select **Save**:
-
+    1. Select the **Add role assignment** button in the navigation.
+    1. Use the following values to find the application you previously selected to grant it the **Storage Blob Data Contributor** role, then select **Save**:
         - **Role**: Storage Account Contributor
         - **Assign access to**: Azure AD user, group or application
         - **Select**: Microsoft Graph data connect Data Transfer (*the name of the Azure AD application you created previously*)
 1. Create a new container in the Azure Storage account
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Blobs**
-    1. Select the **+Container** button at the top of the page and use the following values and then select **Ok**:
+    1. Select the **+Container** button at the top of the page and use the following values and then select **OK**:
         - **Name**: maildump
         - **Public access level**: Private (no anonymous access)
 
@@ -177,16 +180,17 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     > NOTE: Keep track of the user you are using in this step as you will need to switch to the other user you granted the *global administrator* role and that has *multi-factory authentication* enabled on their account in a later step.
 
-1. Select **Create resource** from the sidebar navigation.
+1. Select **Create a resource** from the sidebar navigation.
 1. Find the **Data Factory** resource type and use the following values to create it, then select **Create**:
 
     ![Screenshot creating an Azure Data Factory](./Images/adfv2-setup-01.png)
 
 1. Use the following values to create a new Azure Data Factory resource, then select **Create**:
 
-    - **Name**: *create a unique name*
+    - **Name**: [tenantid]datafactory
+        > The tenant ID is used as part of the data factory name because it needs to be globally unique.
     - **Subscription**: *select your Azure subscription*
-    - **Resource group**: *create / select an existing resource group*
+    - **Resource group**: GraphDataConnect
     - **Version**: V2
     - **Location**: *pick an Azure region near you*
 
@@ -231,11 +235,12 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         ![Screenshot of the Azure Data Factory designer](./Images/adfv2-setup-08.png)
 
     1. Select the **New** button, then select **Azure Blob Storage**
-        1. Select the **Connection** tab.
+        1. Select the **Connection** tab, then select **New**.
         1. Set the following values in the dialog, then select **Finish**:
             - **Authentication method**: Service principal
-            - **Service endpoint**: https://[REPLACE-AZSTORAGE-ACCOUNT].blob.core.windows.net/
-              - *replace `[REPLACE-AZSTORAGE-ACCOUNT]` with the storage account you previously created*
+            - **Azure subscription**: Select all
+            - **Storage account name**: [tenantid]gdcdump
+                > This is the storage account created earlier in this exercise.
             - **Tenant**: *enter the ID of your Azure tenant*
             - **Service principal ID**: *enter the ID of the Azure AD application you previously created*
             - **Service principal key**: *enter the hashed key of the Azure AD application you previously created*
@@ -392,8 +397,8 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
 
 1. Create a new model class that will be used to store the email metrics and in the view of the web application.
     1. In the **Solution Explorer** tool window, right-click the **Models** folder and select **Add > Class**.
-    1. In the **Add New Item** dialog, select **Class**, set the name of the file to **EmailMetrics.cs** and select **Add**.
-    1. Add the following code to the class **EmailMetrics** you just created:
+    1. In the **Add New Item** dialog, select **Class**, set the name of the file to **EmailMetric.cs** and select **Add**.
+    1. Add the following code to the class **EmailMetric** you just created:
 
         ```cs
         public string Email;
@@ -511,7 +516,7 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
         ```cs
         [HttpPost, ActionName("ShowMetrics")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ShowMetrics()
+        public ActionResult ShowMetrics()
         {
           var emailMetrics = ProcessEmails();
 
@@ -557,37 +562,37 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
     1. In the **Add View** dialog, set the following values and leave the remaining input controls to their default values and select **Add**:
         - **View name**: ShowMetrics
         - **Template**: List
-        - **Model class**: EmailMetrics (EMailMetrics.Models)
+        - **Model class**: EmailMetric (EMailMetric.Models)
 
         ![Screenshot of adding a new MVC view](./Images/vs-newView-03.png)
 
     1. Update the markup in the new **Views/EmailMetrics/ShowMetrics.cshtml** to the following. This will display the results of the calculations.
 
-    ```html
-    @model IEnumerable<EmailMetrics.Models.EmailMetric>
+        ```html
+        @model IEnumerable<EmailMetrics.Models.EmailMetric>
 
-    @{
-      ViewBag.Title = "ShowMetrics";
-    }
+        @{
+          ViewBag.Title = "ShowMetrics";
+        }
 
-    <h2>Email Metrics</h2>
+        <h2>Email Metrics</h2>
 
-    <table class="table">
-      <tr>
-        <th>Sender</th>
-        <th>Number of Recipients</th>
-      </tr>
+        <table class="table">
+          <tr>
+            <th>Sender</th>
+            <th>Number of Recipients</th>
+          </tr>
 
-      @foreach (var item in Model)
-      {
-      <tr>
-        <td>@Html.DisplayFor(modelItem => item.Email)</td>
-        <td>@Html.DisplayFor(modelItem => item.RecipientsToEmail)</td>
-      </tr>
-      }
+          @foreach (var item in Model)
+          {
+          <tr>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+            <td>@Html.DisplayFor(modelItem => item.RecipientsToEmail)</td>
+          </tr>
+          }
 
-    </table>
-    ```
+        </table>
+        ```
 
 1. Update the navigation to have a way to get to the new controller:
     1. In the **Solution Explorer** tool window, locate and open the file **Views/Shared/_Layout.cshtml**.

@@ -18,7 +18,7 @@ The first step is to create an Azure AD application that will be used as the sec
 
     - **Name**: Graph Data Connect Data Transfer
     - **Application type**: Web app / API
-    - **Sign-on URL**: https://[tenantid].onmicrosoft.com/Graph Data ConnectDataTransfer
+    - **Sign-on URL**: https://[tenantid].onmicrosoft.com/GraphDataConnectDataTransfer
 
 1. After creating the application, select it.
 1. Locate the **Application ID** and copy it as you will need it later in this lab. This will be referred to as the *service principal ID*.
@@ -49,33 +49,34 @@ In this step you will create an Azure Storage account where Graph Data Connect w
 
 1. Open a browser and navigate to your Azure Portal at [https://portal.azure.com](https://portal.azure.com)
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
-1. Select **Create resource** from the sidebar navigation.
-1. Find the **Storage Account** resource type and use the following values to create it, then select **Create**:
-    - **Name**: *create a unique name*
-    - **Deployment model**: Resource manager
-    - **Account kind**: Blob storage
-    - **Location**: *pick an Azure region near you*
-    - **Replication**: Locally redundant storage (LRS)
-    - **Performance**: Standard
-    - **Secure transfer required**: Disabled
+1. Select **Create a resource** from the sidebar navigation.
+1. Find the **Storage Account** resource type and use the following values to create it, then select **Review + create**:
     - **Subscription**: *select your Azure subscription*
-    - **Resource group**: *create / select an existing resource group*
+    - **Resource group**: GraphDataConnect (*or select an existing resource group*)
+    - **Storage account name**: [tenantid]gdcdump
+        > The tenant ID is used as part of the storage account name because it needs to be globally unique.
+    - **Location**: *pick an Azure region near you*
+    - **Performance**: Standard
+    - **Account kind**: StorageV2 (general purpose v2)
+    - **Replication**: Read-access geo-redundant storage (RA-GRS)
+    - **Access tier**: Hot
+1. Review that the settings match those shown in the previous step and select **Create**    
 1. Once the Azure Storage account has been created, grant the Azure AD application previously created the proper access to it.
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Access control (IAM)**
 
       ![Screenshot of the Azure Storage permissions](./../../Images/azstorage-config-01.png)
 
-    1. Select the **Add** button in the navigation.
+    1. Select the **Add role assignment** button in the navigation.
     1. Use the following values to find the application you previously selected to grant it the **Storage Blob Data Contributor** role, then select **Save**:
 
         - **Role**: Storage Blob Data Contributor
-        - **Assign access to**: Azure AD user, group or application
+        - **Assign access to**: Azure AD user, group or service principal
         - **Select**: Graph Data Connect Data Transfer (*the name of the Azure AD application you created previously*)
 1. Create a new container in the Azure Storage account
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Blobs**
-    1. Select the **+Container** button at the top of the page and use the following values and then select **Ok**:
+    1. Select the **+Container** button at the top of the page and use the following values and then select **OK**:
         - **Name**: maildump
         - **Public access level**: Private (no anonymous access)
 
@@ -88,16 +89,17 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     > NOTE: Keep track of the user you are using in this step as you will need to switch to the other user you granted the *global administrator* role and that has *multi-factory authentication* enabled on their account in a later step.
 
-1. Select **Create resource** from the sidebar navigation.
+1. Select **Create a resource** from the sidebar navigation.
 1. Find the **Data Factory** resource type and use the following values to create it, then select **Create**:
 
     ![Screenshot creating an Azure Data Factory](./../../Images/adfv2-setup-01.png)
 
 1. Use the following values to create a new Azure Data Factory resource, then select **Create**:
 
-    - **Name**: *create a unique name*
+    - **Name**: [tenantid]datafactory
+        > The tenant ID is used as part of the data factory name because it needs to be globally unique.
     - **Subscription**: *select your Azure subscription*
-    - **Resource group**: *create / select an existing resource group*
+    - **Resource group**: GraphDataConnect
     - **Version**: V2
     - **Location**: *pick an Azure region near you*
 
@@ -142,11 +144,12 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         ![Screenshot of the Azure Data Factory designer](./../../Images/adfv2-setup-08.png)
 
     1. Select the **New** button, then select **Azure Blob Storage**
-        1. Select the **Connection** tab.
+        1. Select the **Connection** tab, then select **New**.
         1. Set the following values in the dialog, then select **Finish**:
             - **Authentication method**: Service principal
-            - **Service endpoint**: https://[REPLACE-AZSTORAGE-ACCOUNT].blob.core.windows.net/
-              - *replace `[REPLACE-AZSTORAGE-ACCOUNT]` with the storage account you previously created*
+            - **Azure subscription**: Select all
+            - **Storage account name**: [tenantid]gdcdump
+                > This is the storage account created earlier in this exercise.
             - **Tenant**: *enter the ID of your Azure tenant*
             - **Service principal ID**: *enter the ID of the Azure AD application you previously created*
             - **Service principal key**: *enter the hashed key of the Azure AD application you previously created*
