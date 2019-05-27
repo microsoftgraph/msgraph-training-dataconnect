@@ -2,8 +2,6 @@
 
 This module introduces you to Microsoft Graph data connect.
 
-> NOTE: At the time of publishing this module, Microsoft Graph data connect is in preview and is subject to change. When Microsoft Graph data connect support becomes generally available (GA), this module will be updated to reflect the latest guidance, libraries, and steps required.
-
 ## Lab - Using Microsoft Graph data connect to analyze to find subject matter experts
 
 In this lab you will use Microsoft Graph data connect to analyze emails from an organization in Office 365 to find subject matter experts on specific topics.
