@@ -12,7 +12,7 @@ The first step is to create an Azure AD application that will be used as the sec
 1. On the Azure AD Overview page, select **App registrations** from the **Manage** section of the menu.
 1. Select the **New application registration** button:
 
-    ![Screenshot of the list of app registrations page in the Azure portal](./../../Images/aad-app-setup-01.png)
+    ![Screenshot of the list of app registrations page in the Azure portal](./Images/aad-app-setup-01.png)
 
 1. Use the following values to create a new Azure AD application and select **Register**:
 
@@ -27,21 +27,16 @@ The first step is to create an Azure AD application that will be used as the sec
 
     You can choose different values for **Description** and **Expires** if you like, but ensure you keep a copy of the name and the hashed key after it is saved as the hashed value will never be shown again and you will need to create a new key as it is needed later in the lab.
 
-    ![Screenshot of creating a password for an Azure AD application](./../../Images/aad-app-setup-03.png)
+    ![Screenshot of creating a password for an Azure AD application](./Images/aad-app-setup-03.png)
 
     This will be referenced as the *service principal key*.
 
 1. Using the sidebar navigation for the application, select **Owners**.
 1. Ensure your account is listed as an owner for the application. If it isn't listed as an owner, add it.
-1. While you are in the Azure Active Directory within the Azure portal, obtain the Azure AD's tenant ID as you will need that later in the lab:
-    1. From the Azure AD main sidebar navigation, select the **Properties** menu item.
-    1. Copy the GUID for the **Directory ID** as you will need this later.
-
-    ![Screenshot of the Azure AD Properties page](./../../Images/aad-app-setup-04.png)
 
 ### Create Azure Storage Blob
 
-In this step you will create an Azure Storage account where Graph Data Connect will store the data extracted from Office 365 for further processing.
+In this step you will create an Azure Storage account where Microsoft Graph data connect will store the data extracted from Office 365 for further processing.
 
 1. Open a browser and navigate to your Azure Portal at [https://portal.azure.com](https://portal.azure.com)
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
@@ -51,24 +46,24 @@ In this step you will create an Azure Storage account where Graph Data Connect w
     - **Resource group**: GraphDataConnect (*or select an existing resource group*)
     - **Storage account name**: [tenantid]gdcdump
         > The tenant ID is used as part of the storage account name because it needs to be globally unique.
-    - **Location**: *pick an Azure region near you*
+    - **Location**: *pick an Azure region in the same region as your Office 365 region*
     - **Performance**: Standard
     - **Account kind**: StorageV2 (general purpose v2)
     - **Replication**: Read-access geo-redundant storage (RA-GRS)
     - **Access tier**: Hot
-1. Review that the settings match those shown in the previous step and select **Create**    
+1. Review that the settings match those shown in the previous step and select **Create**
 1. Once the Azure Storage account has been created, grant the Azure AD application previously created the proper access to it.
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Access control (IAM)**
 
-      ![Screenshot of the Azure Storage permissions](./../../Images/azstorage-config-01.png)
+        ![Screenshot of the Azure Storage permissions](./Images/azstorage-config-01.png)
 
     1. Select the **Add** button in the **Add a role assignment** block.
     1. Use the following values to find the application you previously selected to grant it the **Storage Blob Data Contributor** role, then select **Save**:
-
-        - **Role**: Storage Blob Data Contributor
+        - **Role**: Storage Account Contributor
         - **Assign access to**: Azure AD user, group or service principal
         - **Select**: Microsoft Graph data connect Data Transfer (*the name of the Azure AD application you created previously*)
+
 1. Create a new container in the Azure Storage account
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Blobs**
@@ -78,7 +73,7 @@ In this step you will create an Azure Storage account where Graph Data Connect w
 
 ### Create an Azure Data Factory Pipeline
 
-The next step is to use the Azure Data Factory to create a pipeline to extract the data from Office 365 to the Azure Storage account using Graph Data Connect.
+The next step is to use the Azure Data Factory to create a pipeline to extract the data from Office 365 to the Azure Storage account using Microsoft Graph data connect.
 
 1. Open a browser and navigate to your Azure Portal at [https://portal.azure.com](https://portal.azure.com)
 1. Login using an account with global administrator rights to your Azure and Office 365 tenants.
@@ -88,28 +83,29 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 1. Select **Create a resource** from the sidebar navigation.
 1. Find the **Data Factory** resource type and use the following values to create it, then select **Create**:
 
-    ![Screenshot creating an Azure Data Factory](./../../Images/adfv2-setup-01.png)
-
-1. Use the following values to create a new Azure Data Factory resource, then select **Create**:
-
     - **Name**: [tenantid]datafactory
         > The tenant ID is used as part of the data factory name because it needs to be globally unique.
     - **Subscription**: *select your Azure subscription*
     - **Resource group**: GraphDataConnect
     - **Version**: V2
-    - **Location**: *pick an Azure region near you*
+    - **Location**: *pick an Azure region in the same region as your Office 365 region*
+
+    ![Screenshot creating an Azure Data Factory](./Images/adfv2-setup-01.png)
 
 1. Once the Azure Data Factory resource is created, select the **Author & Monitor** tile to launch the Azure Data Factory full screen editor.
 
-    ![Screenshot of the Azure Data Factory](./../../Images/adfv2-setup-02.png)
+    ![Screenshot of the Azure Data Factory](./Images/adfv2-setup-02.png)
 
 1. Switch from the **Overview** to the **Author** experience by selecting it from the left-hand navigation:
 
-    ![Screenshot of the Azure Data Factory menu](./../../Images/adfv2-setup-03.png)
+    ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-03.png)
 
 1. [Optional] By default, the Azure Data Factory will use an *Integration Runtime* that is auto-resolving the region. As the Microsoft Graph Data Connect requires that your source and destination, and integration runtime to exist in the same Office 365 region, it is recommended that you create a new Integration Runtime with a fixed region.
     
     1. At the bottom of the screen, select **Connections** > **Integration Runtimes**.
+
+    ![Screenshot of the Integration Runtime dashboard](./Images/adfv2-setup-12.png)
+
     1. Select **New** > **Perform data movement and dispatch activities to external computes** and then select **Next**.
     1. Select **Azure** for the environment and select **Next**.
     1. Use the following details to complete the form on the final screen and then select **Finish**:
@@ -118,32 +114,34 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         - **Description**: *enter a description*
         - **Region**: *select the region that matches your Office 365 region*
 
-    ![Screenshot of the Integration Runtime Setup](./../../Images/adfv2-setup-11.png)
+    ![Screenshot of the Integration Runtime Setup](./Images/adfv2-setup-11.png)
 
 1. Create a new pipeline by selecting the plus icon, then **pipeline**:
 
-    ![Screenshot of the Azure Data Factory menu](./../../Images/adfv2-setup-04.png)
+    ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-04.png)
 
     1. Drag the **Copy Data** activity from the **Move & Transform** section onto the design surface:
 
-        ![Screenshot of the Azure Data Factory menu](./../../Images/adfv2-setup-05.png)
+        ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-05.png)
 
     1. Select the activity in the designer.
     1. In the activity editor pane below the designer, select the **Source** tab, then select **New**.
-    1. Locate the dataset **Office 365**, select it and then select the **Finish** button.
-
-        > NOTE: The feature flag you added to the URL earlier is what makes the **Office 365** connector appear in this step. This is only necessary when Graph Data Connect is in preview.
-
+    1. Locate the dataset **Office 365**, select it and then select the **Continue** button.
     1. The designer will create a new tab for the Office 365 connector. Select the **Connection** tab in the connector's editor, then the **New** button.
     1. In the dialog that appears, enter the previously created Azure AD application's **Application ID** and **Password** in the **Service principal ID** & **Service principal key** fields, then select **Finish**.
 
         > NOTE: If you created a dedicated Integration Runtime, select it in the **Connect via integration runtime** dropdown.
 
-        ![Screenshot creating a new Office 365 connector in Azure Data Factory](./../../Images/adfv2-setup-06.png)
+        ![Screenshot creating a new Office 365 connector in Azure Data Factory](./Images/adfv2-setup-06.png)
 
     1. After creating the Office 365 connection, for the **Table** field, select **BasicDataSet_v0.Message_v0**.
+    1. Use the following values for the **Date filter**.
+    
+        - **Column Name**: CreatedDateTime
+        - **Start time (UTC)**: *the date six months prior to the current date*
+        - **End time (UTC)**: *the current date*
 
-        ![Screenshot configuring the Office 365 connector in Azure Data Factory](./../../Images/adfv2-setup-07.png)
+        ![Screenshot configuring the Office 365 connector in Azure Data Factory](./Images/adfv2-setup-07.png)
 
     1. Select the **Schema** tab and then select **Import Schema**.
     1. With the *source* configured for your **copy data** activity, now configure the *sink*, or the location where data will be stored.
@@ -152,9 +150,10 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     1. Select the **copy data** activity, then select the **sink** tab:
 
-        ![Screenshot of the Azure Data Factory designer](./../../Images/adfv2-setup-08.png)
+        ![Screenshot of the Azure Data Factory designer](./Images/adfv2-setup-08.png)
 
-    1. Select the **New** button, then select **Azure Blob Storage**
+    1. Select the **New** button, select **Azure Blob Storage**, and then select the **Continue** button.
+    1. Select **Json** as the format for the data and then select the **Continue** button.
         1. Select the **Connection** tab, then select **New**.
         1. Set the following values in the dialog, then select **Finish**:
             - **Authentication method**: Service principal
@@ -167,14 +166,14 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
             > NOTE: If you created a dedicated Integration Runtime, select it in the **Connect via integration runtime** dropdown.
 
-            ![Screenshot of creating a new linked service](./../../Images/adfv2-setup-09.png)
+            ![Screenshot of creating a new linked service](./Images/adfv2-setup-09.png)
 
         1. Next to the **File path** field, select **Browse**.
         1. Select the name of the storage container you created previously.
-        1. Set the **File format** to **JSON format**.
+        1. Ensure the **File format** is set to **JSON format**.
         1. Set the **File pattern** to **Set of objects**.
 
-            ![Screenshot of the Azure Storage blob linked service](./../../Images/adfv2-setup-10.png)
+            ![Screenshot of the Azure Storage blob linked service](./Images/adfv2-setup-10.png)
 
 1. With the pipeline created, select the **Validate All** button at the top of the designer.
 1. After validating (*and fixing any issues that were found*), select the **Publish All** button at the top of the designer.

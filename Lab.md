@@ -126,11 +126,6 @@ The first step is to create an Azure AD application that will be used as the sec
 
 1. Using the sidebar navigation for the application, select **Owners**.
 1. Ensure your account is listed as an owner for the application. If it isn't listed as an owner, add it.
-1. While you are in the Azure Active Directory within the Azure portal, obtain the Azure AD's tenant ID as you will need that later in the lab:
-    1. From the Azure AD main sidebar navigation, select the **Properties** menu item.
-    1. Copy the GUID for the **Directory ID** as you will need this later.
-
-    ![Screenshot of the Azure AD Properties page](./Images/aad-app-setup-04.png)
 
 ### Create Azure Storage Blob
 
