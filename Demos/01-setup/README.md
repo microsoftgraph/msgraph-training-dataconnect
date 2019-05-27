@@ -53,9 +53,9 @@ In this step you will setup your Office 365 tenant to enable usage of Graph Data
 In this step you will enable the Graph Data Connect service on your Office 365 tenant.
 
 1. While you are still logged into the Microsoft 365 Admin Portal, select the **Settings > Services & Add-ins** menu item.
-1. Select the **Microsoft Graph data connect preview** service.
+1. Select the **Microsoft Graph data connect** service.
 
-    ![Screenshot of the Managed access to Microsoft Graph data connect preview settings](./../../Images/m365-setup-01.png)
+    ![Screenshot of the Managed access to Microsoft Graph data connect settings](./../../Images/m365-setup-01.png)
 
 1. Enable the toggle button at the top of the dialog to **Turn Managed access to Microsoft Graph in Microsoft Azure Preview on or off for your entire organization.**
 1. Enter **Consent Request Approvers** (*or the name of the group you created previously*) in the **Group of users to make approval decisions** and select **Save**.
