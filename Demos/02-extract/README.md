@@ -14,22 +14,18 @@ The first step is to create an Azure AD application that will be used as the sec
 
     ![Screenshot of the list of app registrations page in the Azure portal](./../../Images/aad-app-setup-01.png)
 
-1. Use the following values to create a new Azure AD application and select **Create**:
+1. Use the following values to create a new Azure AD application and select **Register**:
 
-    - **Name**: Graph Data Connect Data Transfer
-    - **Application type**: Web app / API
-    - **Sign-on URL**: https://[tenantid].onmicrosoft.com/GraphDataConnectDataTransfer
+    - **Name**: Microsoft Graph data connect Data Transfer
+    - **Supported account types**: Accounts in this organizational directory only
+    - **Redirect URI**: *Leave the default values*
 
-1. After creating the application, select it.
-1. Locate the **Application ID** and copy it as you will need it later in this lab. This will be referred to as the *service principal ID*.
-1. Select the **Settings** button from the top navigation.
-1. Select the **Keys** menu item from the application's menu:
+1. Locate the **Application (client) ID** and copy it as you will need it later in this lab. This will be referred to as the *service principal ID*.
+1. Locate the **Directory (tenant) ID** and copy it as you will need it later in this lab. This will be referred to as the *tentant ID*.
+1. Select **Certificates & secrets** under **Manage** in the sidebar navigation.
+1. Select the **New client secret** button. Set **Description** to `Never expires`, set **Expires** to `Never` and choose **Add**.
 
-    ![Screenshot of the Azure AD application's menu](./../../Images/aad-app-setup-02.png)
-
-1. In the **Passwords** section, create a new key by entering a **name**, **duration** and **value** and click **Save**.
-
-    It does not matter what you choose, but ensure you keep a copy of the name and the hashed key after it is saved as the hashed value will never be shown again and you will need to create a new key as it is needed later in the lab.
+    You can choose different values for **Description** and **Expires** if you like, but ensure you keep a copy of the name and the hashed key after it is saved as the hashed value will never be shown again and you will need to create a new key as it is needed later in the lab.
 
     ![Screenshot of creating a password for an Azure AD application](./../../Images/aad-app-setup-03.png)
 
@@ -72,7 +68,7 @@ In this step you will create an Azure Storage account where Graph Data Connect w
 
         - **Role**: Storage Blob Data Contributor
         - **Assign access to**: Azure AD user, group or service principal
-        - **Select**: Graph Data Connect Data Transfer (*the name of the Azure AD application you created previously*)
+        - **Select**: Microsoft Graph data connect Data Transfer (*the name of the Azure AD application you created previously*)
 1. Create a new container in the Azure Storage account
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Blobs**
