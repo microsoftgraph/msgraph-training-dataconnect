@@ -215,7 +215,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         - **Description**: *enter a description*
         - **Region**: *select the region that matches your Office 365 region*
 
-    ![Screenshot of the Integration Runtime Setup](./../../Images/adfv2-setup-11.png)
+    ![Screenshot of the Integration Runtime Setup](./Images/adfv2-setup-11.png)
 
 1. Create a new pipeline by selecting the plus icon, then **pipeline**:
 
