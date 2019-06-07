@@ -57,5 +57,5 @@ In this step you will enable the Graph Data Connect service on your Office 365 t
 
     ![Screenshot of the Managed access to Microsoft Graph data connect settings](./../../Images/m365-setup-01.png)
 
-1. Enable the toggle button at the top of the dialog to **Turn Managed access to Microsoft Graph in Microsoft Azure Preview on or off for your entire organization.**
+1. Enable the toggle button at the top of the dialog to **Turn Microsoft Graph data connect on or off for your entire organization.**
 1. Enter **Consent Request Approvers** (*or the name of the group you created previously*) in the **Group of users to make approval decisions** and select **Save**.

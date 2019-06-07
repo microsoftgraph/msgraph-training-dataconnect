@@ -86,7 +86,7 @@ In this step you will enable the Microsoft Graph data connect service on your Of
 
     ![Screenshot of the Managed access to Microsoft Graph data connect settings](./Images/m365-setup-01.png)
 
-1. Enable the toggle button at the top of the dialog to **Turn Managed access to Microsoft Graph in Microsoft Azure Preview on or off for your entire organization.**
+1. Enable the toggle button at the top of the dialog to **Turn Microsoft Graph data connect on or off for your entire organization.**
 1. Enter **Consent Request Approvers** (*or the name of the group you created previously*) in the **Group of users to make approval decisions** and select **Save**.
 
 <a name="exercise2"></a>
@@ -275,7 +275,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
 With the pipeline created, now it's time to execute it.
 
-> NOTE: In the current Preview state, some of the tasks in this section can take a while to appear. Such as the request for consent may take 5-30 minutes for the consent request to appear and it is not uncommon for the entire process (start, requesting consent & after approving the consent completing the pipeline run) to take over 40 minutes.
+> NOTE: It can take several minutes for the consent request to appear and it is not uncommon for the entire process (start, requesting consent & after approving the consent completing the pipeline run) to take over 40 minutes.
 
 1. In the Azure Data Factory designer, with the pipeline open, select **Add trigger > Trigger Now**:
 

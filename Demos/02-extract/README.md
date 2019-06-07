@@ -12,7 +12,7 @@ The first step is to create an Azure AD application that will be used as the sec
 1. On the Azure AD Overview page, select **App registrations** from the **Manage** section of the menu.
 1. Select the **New application registration** button:
 
-    ![Screenshot of the list of app registrations page in the Azure portal](./Images/aad-app-setup-01.png)
+    ![Screenshot of the list of app registrations page in the Azure portal](./../../Images/aad-app-setup-01.png)
 
 1. Use the following values to create a new Azure AD application and select **Register**:
 
@@ -27,7 +27,7 @@ The first step is to create an Azure AD application that will be used as the sec
 
     You can choose different values for **Description** and **Expires** if you like, but ensure you keep a copy of the name and the hashed key after it is saved as the hashed value will never be shown again and you will need to create a new key as it is needed later in the lab.
 
-    ![Screenshot of creating a password for an Azure AD application](./Images/aad-app-setup-03.png)
+    ![Screenshot of creating a password for an Azure AD application](./../../Images/aad-app-setup-03.png)
 
     This will be referenced as the *service principal key*.
 
@@ -56,7 +56,7 @@ In this step you will create an Azure Storage account where Microsoft Graph data
     1. Select the Azure Storage account
     1. In the sidebar menu, select **Access control (IAM)**
 
-        ![Screenshot of the Azure Storage permissions](./Images/azstorage-config-01.png)
+        ![Screenshot of the Azure Storage permissions](./../../Images/azstorage-config-01.png)
 
     1. Select the **Add** button in the **Add a role assignment** block.
     1. Use the following values to find the application you previously selected to grant it the **Storage Blob Data Contributor** role, then select **Save**:
@@ -90,21 +90,21 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     - **Version**: V2
     - **Location**: *pick an Azure region in the same region as your Office 365 region*
 
-    ![Screenshot creating an Azure Data Factory](./Images/adfv2-setup-01.png)
+    ![Screenshot creating an Azure Data Factory](./../../Images/adfv2-setup-01.png)
 
 1. Once the Azure Data Factory resource is created, select the **Author & Monitor** tile to launch the Azure Data Factory full screen editor.
 
-    ![Screenshot of the Azure Data Factory](./Images/adfv2-setup-02.png)
+    ![Screenshot of the Azure Data Factory](./../../Images/adfv2-setup-02.png)
 
 1. Switch from the **Overview** to the **Author** experience by selecting it from the left-hand navigation:
 
-    ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-03.png)
+    ![Screenshot of the Azure Data Factory menu](./../../Images/adfv2-setup-03.png)
 
 1. [Optional] By default, the Azure Data Factory will use an *Integration Runtime* that is auto-resolving the region. As the Microsoft Graph Data Connect requires that your source and destination, and integration runtime to exist in the same Office 365 region, it is recommended that you create a new Integration Runtime with a fixed region.
     
     1. At the bottom of the screen, select **Connections** > **Integration Runtimes**.
 
-    ![Screenshot of the Integration Runtime dashboard](./Images/adfv2-setup-12.png)
+    ![Screenshot of the Integration Runtime dashboard](./../../Images/adfv2-setup-12.png)
 
     1. Select **New** > **Perform data movement and dispatch activities to external computes** and then select **Next**.
     1. Select **Azure** for the environment and select **Next**.
@@ -114,15 +114,15 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         - **Description**: *enter a description*
         - **Region**: *select the region that matches your Office 365 region*
 
-    ![Screenshot of the Integration Runtime Setup](./Images/adfv2-setup-11.png)
+    ![Screenshot of the Integration Runtime Setup](./../../Images/adfv2-setup-11.png)
 
 1. Create a new pipeline by selecting the plus icon, then **pipeline**:
 
-    ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-04.png)
+    ![Screenshot of the Azure Data Factory menu](./../../Images/adfv2-setup-04.png)
 
     1. Drag the **Copy Data** activity from the **Move & Transform** section onto the design surface:
 
-        ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-05.png)
+        ![Screenshot of the Azure Data Factory menu](./../../Images/adfv2-setup-05.png)
 
     1. Select the activity in the designer.
     1. In the activity editor pane below the designer, select the **Source** tab, then select **New**.
@@ -132,7 +132,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
         > NOTE: If you created a dedicated Integration Runtime, select it in the **Connect via integration runtime** dropdown.
 
-        ![Screenshot creating a new Office 365 connector in Azure Data Factory](./Images/adfv2-setup-06.png)
+        ![Screenshot creating a new Office 365 connector in Azure Data Factory](./../../Images/adfv2-setup-06.png)
 
     1. After creating the Office 365 connection, for the **Table** field, select **BasicDataSet_v0.Message_v0**.
     1. Use the following values for the **Date filter**.
@@ -141,7 +141,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         - **Start time (UTC)**: *the date six months prior to the current date*
         - **End time (UTC)**: *the current date*
 
-        ![Screenshot configuring the Office 365 connector in Azure Data Factory](./Images/adfv2-setup-07.png)
+        ![Screenshot configuring the Office 365 connector in Azure Data Factory](./../../Images/adfv2-setup-07.png)
 
     1. Select the **Schema** tab and then select **Import Schema**.
     1. With the *source* configured for your **copy data** activity, now configure the *sink*, or the location where data will be stored.
@@ -150,7 +150,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     1. Select the **copy data** activity, then select the **sink** tab:
 
-        ![Screenshot of the Azure Data Factory designer](./Images/adfv2-setup-08.png)
+        ![Screenshot of the Azure Data Factory designer](./../../Images/adfv2-setup-08.png)
 
     1. Select the **New** button, select **Azure Blob Storage**, and then select the **Continue** button.
     1. Select **Json** as the format for the data and then select the **Continue** button.
@@ -166,14 +166,14 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
             > NOTE: If you created a dedicated Integration Runtime, select it in the **Connect via integration runtime** dropdown.
 
-            ![Screenshot of creating a new linked service](./Images/adfv2-setup-09.png)
+            ![Screenshot of creating a new linked service](./../../Images/adfv2-setup-09.png)
 
         1. Next to the **File path** field, select **Browse**.
         1. Select the name of the storage container you created previously.
         1. Ensure the **File format** is set to **JSON format**.
         1. Set the **File pattern** to **Set of objects**.
 
-            ![Screenshot of the Azure Storage blob linked service](./Images/adfv2-setup-10.png)
+            ![Screenshot of the Azure Storage blob linked service](./../../Images/adfv2-setup-10.png)
 
 1. With the pipeline created, select the **Validate All** button at the top of the designer.
 1. After validating (*and fixing any issues that were found*), select the **Publish All** button at the top of the designer.
@@ -182,7 +182,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
 With the pipeline created, now it's time to execute it.
 
-> NOTE: In the current Preview state, some of the tasks in this section can take a while to appear. Such as the request for consent may take 5-30 minutes for the consent request to appear and it is not uncommon for the entire process (start, requesting consent & after approving the consent completing the pipeline run) to take over 40 minutes.
+> NOTE: It can take several minutes for the consent request to appear and it is not uncommon for the entire process (start, requesting consent & after approving the consent completing the pipeline run) to take over 40 minutes.
 
 1. In the Azure Data Factory designer, with the pipeline open, select **Add trigger > Trigger Now**:
 
