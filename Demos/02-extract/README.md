@@ -59,8 +59,8 @@ In this step you will create an Azure Storage account where Microsoft Graph data
         ![Screenshot of the Azure Storage permissions](./../../Images/azstorage-config-01.png)
 
     1. Select the **Add** button in the **Add a role assignment** block.
-    1. Use the following values to find the application you previously selected to grant it the **Storage Account Contributor** role, then select **Save**:
-        - **Role**: Storage Account Contributor
+    1. Use the following values to find the application you previously selected to grant it the **Storage Blob Data Contributor** role, then select **Save**:
+        - **Role**: Storage Blob Data Contributor
         - **Assign access to**: Azure AD user, group or service principal
         - **Select**: Microsoft Graph data connect Data Transfer (*the name of the Azure AD application you created previously*)
 
