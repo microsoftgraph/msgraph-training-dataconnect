@@ -138,8 +138,8 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     1. Use the following values for the **Date filter**.
     
         - **Column Name**: CreatedDateTime
-        - **Start time (UTC)**: *the date six months prior to the current date*
-        - **End time (UTC)**: *the current date*
+        - **Start time (UTC)**: *select a date sometime prior to the current date*
+        - **End time (UTC)**: *select the current date*
 
         ![Screenshot configuring the Office 365 connector in Azure Data Factory](./../../Images/adfv2-setup-07.png)
 
