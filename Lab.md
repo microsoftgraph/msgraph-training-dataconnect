@@ -21,6 +21,9 @@ To complete this lab, you need the following:
   - Multiple Office 365 users with emails sent & received
   - Access to at least two accounts that meet the following requirements:
   - One of the two accounts must be a global tenant administrator & have the **global administrator** role granted (just one account)
+- Workplace Analytics licenses
+  - Access to the Microsoft Graph data connect toolset is available through Workplace Analytics, which is licensed on a per-user, per-month basis.
+  - For more information please see [Microsoft Graph data connect policies and licensing](https://docs.microsoft.com/en-us/graph/data-connect-policies)
 - [Visual Studio](https://visualstudio.microsoft.com/vs/) installed on your development machine. If you do not have Visual Studio, visit the previous link for download options. (**Note:** This tutorial was written with Visual Studio 2017. The steps in this guide may work with other versions, but that has not been tested.)
 
 > NOTE: The screenshots and examples used in this lab are from an Office 365 test tenant with fake email from test users. You can use your own Office 365 tenant to perform the same steps. No data is written to Office 365. A copy of email data is extracted from all users in an office Office 365 tenant and copied to an Azure Blob Storage account that you maintain control over who has access to the data within the Azure Blob Storage.
