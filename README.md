@@ -2,8 +2,6 @@
 
 This module introduces you to Microsoft Graph data connect.
 
-> NOTE: At the time of publishing this module, Microsoft Graph data connect is in preview and is subject to change. When Microsoft Graph data connect support becomes generally available (GA), this module will be updated to reflect the latest guidance, libraries, and steps required.
-
 ## Lab - Using Microsoft Graph data connect to analyze to find subject matter experts
 
 In this lab you will use Microsoft Graph data connect to analyze emails from an organization in Office 365 to find subject matter experts on specific topics.
@@ -22,17 +20,17 @@ This module has been recorded and is available in the Office Development YouTube
 
 ## Contributors
 
-| Roles                | Author(s)                                               |
-| -------------------- | ------------------------------------------------------- |
-| Lab Manuals / Slides | Andrew Connell (Microsoft MVP, Voitanos) @andrewconnell |
-| QA                   | Rob Windsor (Microsoft MVP, PAIT Group) @rob-windsor    |
-| Sponsor / Support    | Tyler Lenig (Microsoft) @tlenig                         |
-| Sponsor / Support    | Rishi Girish (Microsoft) @rgirish2                      |
+|        Roles         |                                       Author(s)                                       |
+| -------------------- | ------------------------------------------------------------------------------------- |
+| Lab Manuals / Slides | Andrew Connell (Microsoft MVP, Voitanos) [@andrewconnell](//github.com/andrewconnell) |
+| QA                   | Rob Windsor (Microsoft MVP, PAIT Group) [@rob-windsor](//github.com/rob-windsor)      |
+| Sponsor / Support    | Tyler Lenig (Microsoft) [@tlenig](//github.com/tlenig)                                |
 
 ## Version history
 
-| Version | Date              | Comments                                  |
+| Version |       Date        |                 Comments                  |
 | ------- | ----------------- | ----------------------------------------- |
+| 1.5     | June 14, 2019     | 2019Q4 content refresh                    |
 | 1.4     | March 18, 2019    | 2019Q3 content refresh                    |
 | 1.3     | December 21, 2018 | 2019Q2 content refresh                    |
 | 1.2     | November 2, 2018  | Update required IAM role for blob storage |

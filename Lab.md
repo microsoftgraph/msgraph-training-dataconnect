@@ -21,6 +21,9 @@ To complete this lab, you need the following:
   - Multiple Office 365 users with emails sent & received
   - Access to at least two accounts that meet the following requirements:
   - One of the two accounts must be a global tenant administrator & have the **global administrator** role granted (just one account)
+- Workplace Analytics licenses
+  - Access to the Microsoft Graph data connect toolset is available through [Workplace Analytics](https://products.office.com/en-us/business/workplace-analytics), which is licensed on a per-user, per-month basis.
+  - To learn more please see [Microsoft Graph data connect policies and licensing](https://docs.microsoft.com/en-us/graph/data-connect-policies)
 - [Visual Studio](https://visualstudio.microsoft.com/vs/) installed on your development machine. If you do not have Visual Studio, visit the previous link for download options. (**Note:** This tutorial was written with Visual Studio 2017. The steps in this guide may work with other versions, but that has not been tested.)
 
 > NOTE: The screenshots and examples used in this lab are from an Office 365 test tenant with fake email from test users. You can use your own Office 365 tenant to perform the same steps. No data is written to Office 365. A copy of email data is extracted from all users in an office Office 365 tenant and copied to an Azure Blob Storage account that you maintain control over who has access to the data within the Azure Blob Storage.
@@ -82,11 +85,11 @@ In this step you will setup your Office 365 tenant to enable usage of Microsoft 
 In this step you will enable the Microsoft Graph data connect service on your Office 365 tenant.
 
 1. While you are still logged into the Microsoft 365 Admin Portal, select the **Settings > Services & Add-ins** menu item.
-1. Select the **Microsoft Graph data connect preview** service.
+1. Select the **Microsoft Graph data connect** service.
 
-    ![Screenshot of the Managed access to Microsoft Graph data connect preview settings](./Images/m365-setup-01.png)
+    ![Screenshot of the Managed access to Microsoft Graph data connect settings](./Images/m365-setup-01.png)
 
-1. Enable the toggle button at the top of the dialog to **Turn Managed access to Microsoft Graph in Microsoft Azure Preview on or off for your entire organization.**
+1. Enable the toggle button at the top of the dialog to **Turn Microsoft Graph data connect on or off for your entire organization.**
 1. Enter **Consent Request Approvers** (*or the name of the group you created previously*) in the **Group of users to make approval decisions** and select **Save**.
 
 <a name="exercise2"></a>
@@ -107,22 +110,18 @@ The first step is to create an Azure AD application that will be used as the sec
 
     ![Screenshot of the list of app registrations page in the Azure portal](./Images/aad-app-setup-01.png)
 
-1. Use the following values to create a new Azure AD application and select **Create**:
+1. Use the following values to create a new Azure AD application and select **Register**:
 
     - **Name**: Microsoft Graph data connect Data Transfer
-    - **Application type**: Web app / API
-    - **Sign-on URL**: https://[tenantid].onmicrosoft.com/GraphDataConnectDataTransfer
+    - **Supported account types**: Accounts in this organizational directory only
+    - **Redirect URI**: *Leave the default values*
 
-1. After creating the application, select it.
-1. Locate the **Application ID** and copy it as you will need it later in this lab. This will be referred to as the *service principal ID*.
-1. Select the **Settings** button from the top navigation.
-1. Select the **Keys** menu item from the application's menu:
+1. Locate the **Application (client) ID** and copy it as you will need it later in this lab. This will be referred to as the *service principal ID*.
+1. Locate the **Directory (tenant) ID** and copy it as you will need it later in this lab. This will be referred to as the *tentant ID*.
+1. Select **Certificates & secrets** under **Manage** in the sidebar navigation.
+1. Select the **New client secret** button. Set **Description** to `Never expires`, set **Expires** to `Never` and choose **Add**.
 
-    ![Screenshot of the Azure AD application's menu](./Images/aad-app-setup-02.png)
-
-1. In the **Passwords** section, create a new key by entering a **name**, **duration** and **value** and click **Save**.
-
-    It does not matter what you choose, but ensure you keep a copy of the name and the hashed key after it is saved as the hashed value will never be shown again and you will need to create a new key as it is needed later in the lab.
+    You can choose different values for **Description** and **Expires** if you like, but ensure you keep a copy of the name and the hashed key after it is saved as the hashed value will never be shown again and you will need to create a new key as it is needed later in the lab.
 
     ![Screenshot of creating a password for an Azure AD application](./Images/aad-app-setup-03.png)
 
@@ -130,11 +129,6 @@ The first step is to create an Azure AD application that will be used as the sec
 
 1. Using the sidebar navigation for the application, select **Owners**.
 1. Ensure your account is listed as an owner for the application. If it isn't listed as an owner, add it.
-1. While you are in the Azure Active Directory within the Azure portal, obtain the Azure AD's tenant ID as you will need that later in the lab:
-    1. From the Azure AD main sidebar navigation, select the **Properties** menu item.
-    1. Copy the GUID for the **Directory ID** as you will need this later.
-
-    ![Screenshot of the Azure AD Properties page](./Images/aad-app-setup-04.png)
 
 ### Create Azure Storage Blob
 
@@ -162,8 +156,8 @@ In this step you will create an Azure Storage account where Microsoft Graph data
 
     1. Select the **Add** button in the **Add a role assignment** block.
     1. Use the following values to find the application you previously selected to grant it the **Storage Blob Data Contributor** role, then select **Save**:
-        - **Role**: Storage Account Contributor
-        - **Assign access to**: Azure AD user, group or application
+        - **Role**: Storage Blob Data Contributor
+        - **Assign access to**: Azure AD user, group or service principal
         - **Select**: Microsoft Graph data connect Data Transfer (*the name of the Azure AD application you created previously*)
 
 1. Create a new container in the Azure Storage account
@@ -185,16 +179,14 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 1. Select **Create a resource** from the sidebar navigation.
 1. Find the **Data Factory** resource type and use the following values to create it, then select **Create**:
 
-    ![Screenshot creating an Azure Data Factory](./Images/adfv2-setup-01.png)
-
-1. Use the following values to create a new Azure Data Factory resource, then select **Create**:
-
     - **Name**: [tenantid]datafactory
         > The tenant ID is used as part of the data factory name because it needs to be globally unique.
     - **Subscription**: *select your Azure subscription*
     - **Resource group**: GraphDataConnect
     - **Version**: V2
     - **Location**: *pick an Azure region in the same region as your Office 365 region*
+
+    ![Screenshot creating an Azure Data Factory](./Images/adfv2-setup-01.png)
 
 1. Once the Azure Data Factory resource is created, select the **Author & Monitor** tile to launch the Azure Data Factory full screen editor.
 
@@ -207,6 +199,9 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 1. [Optional] By default, the Azure Data Factory will use an *Integration Runtime* that is auto-resolving the region. As the Microsoft Graph Data Connect requires that your source and destination, and integration runtime to exist in the same Office 365 region, it is recommended that you create a new Integration Runtime with a fixed region.
     
     1. At the bottom of the screen, select **Connections** > **Integration Runtimes**.
+
+    ![Screenshot of the Integration Runtime dashboard](./Images/adfv2-setup-12.png)
+
     1. Select **New** > **Perform data movement and dispatch activities to external computes** and then select **Next**.
     1. Select **Azure** for the environment and select **Next**.
     1. Use the following details to complete the form on the final screen and then select **Finish**:
@@ -215,7 +210,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         - **Description**: *enter a description*
         - **Region**: *select the region that matches your Office 365 region*
 
-    ![Screenshot of the Integration Runtime Setup](./../../Images/adfv2-setup-11.png)
+    ![Screenshot of the Integration Runtime Setup](./Images/adfv2-setup-11.png)
 
 1. Create a new pipeline by selecting the plus icon, then **pipeline**:
 
@@ -227,10 +222,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     1. Select the activity in the designer.
     1. In the activity editor pane below the designer, select the **Source** tab, then select **New**.
-    1. Locate the dataset **Office 365**, select it and then select the **Finish** button.
-
-        > NOTE: The feature flag you added to the URL earlier is what makes the **Office 365** connector appear in this step. This is only necessary when Microsoft Graph data connect is in preview.
-
+    1. Locate the dataset **Office 365**, select it and then select the **Continue** button.
     1. The designer will create a new tab for the Office 365 connector. Select the **Connection** tab in the connector's editor, then the **New** button.
     1. In the dialog that appears, enter the previously created Azure AD application's **Application ID** and **Password** in the **Service principal ID** & **Service principal key** fields, then select **Finish**.
 
@@ -239,6 +231,11 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         ![Screenshot creating a new Office 365 connector in Azure Data Factory](./Images/adfv2-setup-06.png)
 
     1. After creating the Office 365 connection, for the **Table** field, select **BasicDataSet_v0.Message_v0**.
+    1. Use the following values for the **Date filter**.
+    
+        - **Column Name**: CreatedDateTime
+        - **Start time (UTC)**: *select a date sometime prior to the current date*
+        - **End time (UTC)**: *select the current date*
 
         ![Screenshot configuring the Office 365 connector in Azure Data Factory](./Images/adfv2-setup-07.png)
 
@@ -251,7 +248,8 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
         ![Screenshot of the Azure Data Factory designer](./Images/adfv2-setup-08.png)
 
-    1. Select the **New** button, then select **Azure Blob Storage**
+    1. Select the **New** button, select **Azure Blob Storage**, and then select the **Continue** button.
+    1. Select **Json** as the format for the data and then select the **Continue** button.
         1. Select the **Connection** tab, then select **New**.
         1. Set the following values in the dialog, then select **Finish**:
             - **Authentication method**: Service principal
@@ -268,7 +266,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
         1. Next to the **File path** field, select **Browse**.
         1. Select the name of the storage container you created previously.
-        1. Set the **File format** to **JSON format**.
+        1. Ensure the **File format** is set to **JSON format**.
         1. Set the **File pattern** to **Set of objects**.
 
             ![Screenshot of the Azure Storage blob linked service](./Images/adfv2-setup-10.png)
@@ -280,7 +278,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
 With the pipeline created, now it's time to execute it.
 
-> NOTE: In the current Preview state, some of the tasks in this section can take a while to appear. Such as the request for consent may take 5-30 minutes for the consent request to appear and it is not uncommon for the entire process (start, requesting consent & after approving the consent completing the pipeline run) to take over 40 minutes.
+> NOTE: It can take several minutes for the consent request to appear and it is not uncommon for the entire process (start, requesting consent & after approving the consent completing the pipeline run) to take over 40 minutes.
 
 1. In the Azure Data Factory designer, with the pipeline open, select **Add trigger > Trigger Now**:
 
