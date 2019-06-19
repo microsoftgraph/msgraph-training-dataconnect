@@ -16,7 +16,7 @@ In this lab you will use Microsoft Graph data connect to analyze emails from an 
 
 ## Watch the module
 
-This module has been recorded and is available in the Office Development YouTube channel: [Microsoft Graph Data Connect](https://www.youtube.com/watch?v=p6wnd-dAKZ8)
+This module has been recorded and is available in the Office Development YouTube channel: [Microsoft Graph Data Connect](https://youtu.be/6IJ7W8IXeJ4)
 
 ## Contributors
 
@@ -28,14 +28,15 @@ This module has been recorded and is available in the Office Development YouTube
 
 ## Version history
 
-| Version |       Date        |                 Comments                  |
-| ------- | ----------------- | ----------------------------------------- |
-| 1.5     | June 14, 2019     | 2019Q4 content refresh                    |
-| 1.4     | March 18, 2019    | 2019Q3 content refresh                    |
-| 1.3     | December 21, 2018 | 2019Q2 content refresh                    |
-| 1.2     | November 2, 2018  | Update required IAM role for blob storage |
-| 1.1     | October 16, 2018  | Fix screencast link & typo                |
-| 1.0     | October 2, 2018   | New module submitted                      |
+| Version |       Date        |                     Comments                     |
+| ------- | ----------------- | ------------------------------------------------ |
+| 1.6     | June 18, 2019     | Updated readme to refreshed screencast recording |
+| 1.5     | June 14, 2019     | 2019Q4 content refresh                           |
+| 1.4     | March 18, 2019    | 2019Q3 content refresh                           |
+| 1.3     | December 21, 2018 | 2019Q2 content refresh                           |
+| 1.2     | November 2, 2018  | Update required IAM role for blob storage        |
+| 1.1     | October 16, 2018  | Fix screencast link & typo                       |
+| 1.0     | October 2, 2018   | New module submitted                             |
 
 ## Disclaimer
 
