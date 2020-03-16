@@ -96,7 +96,7 @@ In this step you will enable the Microsoft Graph data connect service on your Of
 
 ## Exercise 2: Extract Office 365 data with Microsoft Graph data connect
 
-In this exercise you will create, execute and approve an Azure Data Factory pipeline to extra data from Office 365 to an Azure Storage Blob for additional processing.
+In this exercise you will create, execute and approve an Azure Data Factory pipeline to extract data from Office 365 to an Azure Storage Blob for additional processing.
 
 ### Create Azure AD Application
 
