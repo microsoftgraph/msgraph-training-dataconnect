@@ -142,7 +142,7 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
         [ValidateAntiForgeryToken]
         public ActionResult ShowMetrics()
         {
-          var emailMetrics = ProcessEmails();
+          var emailMetrics = ProcessBlobFiles();
 
           return View(emailMetrics);
         }
