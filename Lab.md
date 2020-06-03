@@ -15,7 +15,7 @@ To complete this lab, you need the following:
 - Microsoft Azure subscription
   - If you do not have one, you can obtain one (for free) here: [https://azure.microsoft.com/free](https://azure.microsoft.com/free/)
   - The account used to signin must have the **global administrator** role granted to it.
-  - The Azure subbscription must be in the same tenant as the Office 365 tenant as Graph Data Connect will only export data to an Azure subbscription in the same tenant, not across tenants.
+  - The Azure subscription must be in the same tenant as the Office 365 tenant as Graph Data Connect will only export data to an Azure subscription in the same tenant, not across tenants.
 - Office 365 tenancy
   - If you do not have one, you obtain one (for free) by signing up to the [Office 365 Developer Program](https://developer.microsoft.com/office/dev-program).
   - Multiple Office 365 users with emails sent & received
