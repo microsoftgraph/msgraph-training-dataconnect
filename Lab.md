@@ -192,33 +192,38 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     ![Screenshot of the Azure Data Factory](./Images/adfv2-setup-02.png)
 
-1. Switch from the **Overview** to the **Author** experience by selecting it from the left-hand navigation:
+1. Switch from the **Overview** to the **Manage** experience by selecting it from the left-hand navigation:
 
-    ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-03.png)
+    ![Screenshot of the Azure Data Factory menu](./Images/adf-01.png)
 
 1. [Optional] By default, the Azure Data Factory will use an *Integration Runtime* that is auto-resolving the region. As the Microsoft Graph Data Connect requires that your source and destination, and integration runtime to exist in the same Office 365 region, it is recommended that you create a new Integration Runtime with a fixed region.
     
-    1. At the bottom of the screen, select **Connections** > **Integration Runtimes**.
+    1. Select **Integration runtimes** > **New**.
 
-    ![Screenshot of the Integration Runtime dashboard](./Images/adfv2-setup-12.png)
+    ![Screenshot of the Integration Runtime Setup 1](./Images/adf-02.png)
 
-    1. Select **New** > **Perform data movement and dispatch activities to external computes** and then select **Next**.
-    1. Select **Azure** for the environment and select **Next**.
-    1. Use the following details to complete the form on the final screen and then select **Finish**:
+    1. Select **Azure, Self-Hosted** and select **Continue**.
 
+    ![Screenshot of the Integration Runtime Setup 2](./Images/adf-03.png)
+
+    1. Select **Azure** for network environment and select **Continue**.
+
+    ![Screenshot of the Integration Runtime Setup 3](./Images/adf-04.png)
+    
+    1. Use the following details to complete the form on the final screen and then select **Create**:
         - **Name**: *name of your integration runtime*
         - **Description**: *enter a description*
         - **Region**: *select the region that matches your Office 365 region*
 
-    ![Screenshot of the Integration Runtime Setup](./Images/adfv2-setup-11.png)
+    ![Screenshot of the Integration Runtime Setup 4](./Images/adf-05.png)
 
-1. Create a new pipeline by selecting the plus icon, then **pipeline**:
+1. Switch from the **Manage** to the **Author** experience by selecting it from the left-hand navigation and create a new pipeline by selecting the plus icon, then **pipeline**:
 
-    ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-04.png)
+    ![Screenshot of the Azure Data Factory menu](./Images/adf-06.png)
 
     1. Drag the **Copy Data** activity from the **Move & Transform** section onto the design surface:
 
-        ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-05.png)
+    ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-05.png)
 
     1. Select the activity in the designer.
     1. In the activity editor pane below the designer, select the **Source** tab, then select **New**.
@@ -231,15 +236,18 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         ![Screenshot creating a new Office 365 connector in Azure Data Factory](./Images/adfv2-setup-06.png)
 
     1. After creating the Office 365 connection, for the **Table** field, select **BasicDataSet_v0.Message_v0**.
-    1. Use the following values for the **Date filter**.
-    
+
+        ![Screenshot configuring the Office 365 connector in Azure Data Factory](./Images/adf-09.png)
+
+    1. Switch from **Office365Table** to **Pipeline > Source**. Use the following values for the **Date filter**.
         - **Column Name**: CreatedDateTime
         - **Start time (UTC)**: *select a date sometime prior to the current date*
         - **End time (UTC)**: *select the current date*
 
-        ![Screenshot configuring the Office 365 connector in Azure Data Factory](./Images/adfv2-setup-07.png)
-
     1. Select the **Schema** tab and then select **Import Schema**.
+    
+        ![Screenshot configuring the Office 365 connector in Azure Data Factory](./Images/adf-07.png)
+
     1. With the *source* configured for your **copy data** activity, now configure the *sink*, or the location where data will be stored.
 
         Select the tab in the designer for your pipeline.
