@@ -200,22 +200,22 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     
     1. Select **Integration runtimes** > **New**.
 
-      ![Screenshot of the Integration Runtime Setup 1](./Images/adf-02.png)
+        ![Screenshot of the Integration Runtime Setup 1](./Images/adf-02.png)
 
     1. Select **Azure, Self-Hosted** and select **Continue**.
 
-      ![Screenshot of the Integration Runtime Setup 2](./Images/adf-03.png)
+        ![Screenshot of the Integration Runtime Setup 2](./Images/adf-03.png)
 
     1. Select **Azure** for network environment and select **Continue**.
 
-      ![Screenshot of the Integration Runtime Setup 3](./Images/adf-04.png)
+        ![Screenshot of the Integration Runtime Setup 3](./Images/adf-04.png)
     
     1. Use the following details to complete the form on the final screen and then select **Create**:
         - **Name**: *name of your integration runtime*
         - **Description**: *enter a description*
         - **Region**: *select the region that matches your Office 365 region*
 
-      ![Screenshot of the Integration Runtime Setup 4](./Images/adf-05.png)
+          ![Screenshot of the Integration Runtime Setup 4](./Images/adf-05.png)
 
 1. Switch from the **Manage** to the **Author** experience by selecting it from the left-hand navigation and create a new pipeline by selecting the plus icon, then **pipeline**:
 
