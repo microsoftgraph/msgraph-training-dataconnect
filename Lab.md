@@ -270,7 +270,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
             > NOTE: If you created a dedicated Integration Runtime, select it in the **Connect via integration runtime** dropdown.
 
-            ![Screenshot of creating a new linked service](./Images/adfv2-setup-09.png)
+            ![Screenshot of creating a new linked service](./Images/adfv2-setup-09.PNG)
 
         1. Next to the **File path** field, select **Browse**.
         1. Select the name of the storage container you created previously.
