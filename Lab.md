@@ -215,7 +215,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         - **Description**: *enter a description*
         - **Region**: *select the region that matches your Office 365 region*
 
-          ![Screenshot of the Integration Runtime Setup 4](./Images/adf-05.png)
+        ![Screenshot of the Integration Runtime Setup 4](./Images/adf-05.png)
 
 1. Switch from the **Manage** to the **Author** experience by selecting it from the left-hand navigation and create a new pipeline by selecting the plus icon, then **pipeline**:
 
@@ -223,7 +223,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
 
     1. Drag the **Copy Data** activity from the **Move & Transform** section onto the design surface:
 
-      ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-05.png)
+        ![Screenshot of the Azure Data Factory menu](./Images/adfv2-setup-05.png)
 
     1. Select the activity in the designer.
     1. In the activity editor pane below the designer, select the **Source** tab, then select **New**.
