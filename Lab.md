@@ -50,12 +50,12 @@ In this step you will ensure that two users in your Office 365 tenant have the *
 
 1. In the list of **All Users**, identify a user you will use in this lab that you have access to.
     1. Select the user by selecting their name.
-    1. In the sidebar navigation menu, select **Directory role**.
+    1. In the sidebar navigation menu, select **Assigned roles**.
 
         ![Screenshot of the Users menu in Azure AD](./Images/aad-user-setup-03.png)
 
     1. If the role **Global administrator** is not in the list of roles for the user:
-        1. Select **Add role** button.
+        1. Select **Add assignment** button.
         1. Locate and select the **Global administrator** role and then select the **Select** button.
     1. Repeat these steps with another user that you will use in this lab.
 
@@ -64,18 +64,25 @@ In this step you will ensure that two users in your Office 365 tenant have the *
 In this step you will setup your Office 365 tenant to enable usage of Microsoft Graph data connect.
 
 1. Open a browser and navigate to your Microsoft 365 Admin Portal at [https://admin.microsoft.com](https://admin.microsoft.com)
-1. In the sidebar navigation, select **Groups**.
+1. In the sidebar navigation, select **Active Groups**.
 1. Select the **Add a group** button.
 1. Use the following to create the new mail-enabled security group and select the **Add** button.
 
     - **Type**: Mail-enabled security
-    - **Name**: Consent Request Approvers
 
     ![Screenshot of creating a new mail-enabled security group](./Images/m365-group-setup-01.png)
 
-1. Once the group has been created, select it.
+    - **Name**: Consent Request Approvers
 
-    > Change the View dropdown to **Mail-enabled security** if you do not see Consent Request Approvers in the list of groups 
+    ![Screenshot of creating a new mail-enabled security group named Consent Request Approvers](./Images/m365-group-setup-02.png)
+
+    - **Email Prefix**: consentrequestapprovers
+
+    ![Screenshot of creating a new mail-enabled security group named with email prefix consentrequestapprovers](./Images/m365-group-setup-03.png)
+
+1. **It can take up to an hour before the newly created group shows up in the list**. Once the group has been created, select it.
+
+    > Change the View dropdown to **Mail-enabled security** if you do not see Consent Request Approvers in the list of groups
 
 1. On the **Members** section of the group dialog, select **Edit**
 1. Add the two users that you enabled the **Global administrator** role to this new group.
@@ -197,7 +204,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     ![Screenshot of the Azure Data Factory menu](./Images/adf-01.png)
 
 1. [Optional] By default, the Azure Data Factory will use an *Integration Runtime* that is auto-resolving the region. As the Microsoft Graph Data Connect requires that your source and destination, and integration runtime to exist in the same Office 365 region, it is recommended that you create a new Integration Runtime with a fixed region.
-    
+
     1. Select **Integration runtimes** > **New**.
 
         ![Screenshot of the Integration Runtime Setup 1](./Images/adf-02.png)
@@ -209,7 +216,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
     1. Select **Azure** for network environment and select **Continue**.
 
         ![Screenshot of the Integration Runtime Setup 3](./Images/adf-04.png)
-    
+
     1. Use the following details to complete the form on the final screen and then select **Create**:
         - **Name**: *name of your integration runtime*
         - **Description**: *enter a description*
@@ -245,7 +252,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         - **End time (UTC)**: *select the current date*
 
     1. Select the **Schema** tab and then select **Import Schema**.
-    
+
         ![Screenshot configuring the Office 365 connector in Azure Data Factory](./Images/adf-07.png)
 
     1. With the *source* configured for your **copy data** activity, now configure the *sink*, or the location where data will be stored.
@@ -484,7 +491,7 @@ In this exercise you will create a simple ASP.NET MVC web application that will 
                     emailMetric.Email = sender;
                     emailMetric.RecipientsToEmail = totalRecipients;
 
-                    // if already have this sender... 
+                    // if already have this sender...
                     var existingMetric = emailMetrics.FirstOrDefault(metric => metric.Email == emailMetric.Email);
                     if (existingMetric != null)
                     {
