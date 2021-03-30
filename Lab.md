@@ -124,7 +124,7 @@ The first step is to create an Azure AD application that will be used as the sec
     - **Redirect URI**: *Leave the default values*
 
 1. Locate the **Application (client) ID** and copy it as you will need it later in this lab. This will be referred to as the *service principal ID*.
-1. Locate the **Directory (tenant) ID** and copy it as you will need it later in this lab. This will be referred to as the *tentant ID*.
+1. Locate the **Directory (tenant) ID** and copy it as you will need it later in this lab. This will be referred to as the *tenant ID*.
 1. Select **Certificates & secrets** under **Manage** in the sidebar navigation.
 1. Select the **New client secret** button. Set **Description** to `Never expires`, set **Expires** to `Never` and choose **Add**.
 
