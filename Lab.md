@@ -264,7 +264,7 @@ The next step is to use the Azure Data Factory to create a pipeline to extract t
         ![Screenshot of the Azure Data Factory designer](./Images/adfv2-setup-08.png)
 
     1. Select the **New** button, select **Azure Blob Storage**, and then select the **Continue** button.
-    1. Select **Json** as the format for the data and then select the **Continue** button.
+    1. Select **Binary** as the format for the data and then select the **Continue** button.
         1. Select the **Connection** tab, then select **New**.
         1. Set the following values in the dialog, then select **Finish**:
             - **Authentication method**: Service principal
